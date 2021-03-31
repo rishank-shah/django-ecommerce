@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
-from Home import views
+from authapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('home/', include('Home.urls')),
+    path('home/', include('authapp.urls')),
     path('logout/',views.user_logout,name='user_logout')
 ]
 
