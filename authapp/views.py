@@ -14,7 +14,7 @@ class Registration(View):
         return render(request,'authapp/register.html')
 
     def post(self,request):
-        username = request.POST.get('username','')
+        username = request.POST.get('u_name','')
         email = request.POST.get('email_1','')
         password = request.POST.get('password','')
         phone_number = request.POST.get('mobile_no','')
