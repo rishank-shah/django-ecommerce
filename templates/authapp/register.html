@@ -1,0 +1,41 @@
+{% extends "authapp/base.html" %}
+{% load static %}
+{% block title_main %}Register{% endblock %}
+{% block content %}
+<div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card bg-secondary border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    {% include "partials/_messages.html" %}
+                    <div class="text-center text-muted mb-4"><small>Register For An Account</small></div>
+                        <form action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3"><div class="input-group-prepend"></div><input class="form-control" value="{{first_name}}" name="f_name" placeholder="First Name" type="text" autofocus></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3"><div class="input-group-prepend"></div><input class="form-control" name="l_name" value="{{last_name}}" placeholder="Last Name" type="text"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3"><div class="input-group-prepend"></div><input class="form-control" name="username" value="{{username}}" placeholder="username" type="text"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3"><div class="input-group-prepend"></div><input class="form-control" name="mobile_no" value="{{phone_number}}" placeholder="Mobile Number" type="text"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative mb-3"><div class="input-group-prepend"></div><input class="form-control" name="email_1" value="{{email}}" placeholder="Email" type="email"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-merge input-group-alternative"><div class="input-group-prepend"></div><input class="form-control" name="password" placeholder="Password" type="password"></div>
+                            </div>
+                            <div class="text-center"><button type="submit" class="btn btn-primary mt-4">Create account</button></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-6 text-right"><a href="{% url 'login' %}" class="text-dark"><small>Login</small></a></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

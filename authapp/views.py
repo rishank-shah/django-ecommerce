@@ -1,93 +1,126 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.views import View
 from django.contrib.auth.models import User
-from django.contrib.auth import login,logout, authenticate
-from .forms import UserForm, UserProfileInfoForm
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import EmailMessage
-import threading
+from django.contrib import auth
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from .utils import email_register,account_activation_token
+from .models import UserProfileInfo
 
-# Create your views here.
-def index(request):
-    return render(request, 'authapp/index.html')
+class Registration(View):
 
-@login_required
-def user_logout(request):
-    logout(request)
-    return redirect('index')
+    def get(self,request):
+        return render(request,'authapp/register.html')
 
-def signupuser(request):
-    if request.method == 'POST':
-        form = UserForm(data=request.POST)
-        profile_form = UserProfileInfoForm(data=request.POST)
+    def post(self,request):
+        username = request.POST.get('username','')
+        email = request.POST.get('email_1','')
+        password = request.POST.get('password','')
+        phone_number = request.POST.get('mobile_no','')
+        first_name = request.POST.get('f_name','')
+        last_name = request.POST.get('l_name','')
 
-        if form.is_valid() and profile_form.is_valid():
-            user = form.save()
-            user.set_password(user.password)
-            user.save()
+        context = {
+            "username":username,
+            "email":email,
+            "last_name":last_name,
+            "first_name":first_name,
+            "phone_number":phone_number
+        }
 
-            profile = profile_form.save(commit=False)
-            profile.user = user
+        list_context = list(context.values())
+        if '' in list_context:
+            messages.error(request,"All Fields are required")
+            return render(request,'authapp/register.html',context=context)
 
-            if 'profile_pic' in request.FILES:
-                profile.profile_pic = request.FILES['profile_pic']
-
-            profile.save()
-            messages.success(request,"Registered Succesfully. Check Email for confirmation")
-            # EmailThread(email).start()
-            login(request,user)
-            return redirect('index')
-
-        else:
-            print(form.errors,profile_form.errors)
-
-    else:
-        form = UserForm()
-        profile_form = UserProfileInfoForm()
-
-    return render(request, 'authapp/signupuser.html',{'form':form, 'profile_form':profile_form})
-
-def user_login (request):
-    if request.method == 'POST':
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
-
-        if user:
-            if user.is_active:
-                login(request,user)
-                # email = User.objects.get(username=username).email
-                #
-				# 	email_subject = 'You Logged into your Portal account'
-				# 	email_body = "If you think someone else logged in. Please contact support or reset your password.\n\nYou are receving this message because you have enabled login email notifications in portal settings. If you don't want to recieve such emails in future please turn the login email notifications off in settings."
-				# 	fromEmail = 'noreply@exam.com'
-				# 	email = EmailMessage(
-				# 		email_subject,
-				# 		email_body,
-				# 		fromEmail,
-				# 		[email],
-				# 	)
+        if not User.objects.filter(username=username).exists():
+            if  not User.objects.filter(email=email).exists():
+                if len(password) < 6:
+                    messages.error(request,'Password is too short')
+                    return render(request,'authapp/register.html',context=context)
+                
+                user = User.objects.create_user(username=username,email=email,first_name=first_name,last_name=last_name)
+                user.set_password(password)
+                user.is_active = False
+                user.save()
+                UserProfileInfo.objects.create(user=user,phone_number=phone_number).save()
+                email_register(request,user,email)
+                messages.success(request,'Account Created Succesfully. Please Confirm Email')
                 return redirect('index')
             else:
-                messages.error(request,'Account not Activated')
-                return render(request,'authapp/loginuser.html', {'form':AuthenticationForm(), 'error':'Account not Activated.'})
+                messages.error(request,'Email Already exists')
+                return render(request,'authapp/register.html',context=context)
         else:
-            messages.error(request,"Invalid Login Details!")
-            return render(request,'authapp/loginuser.html', {'form':AuthenticationForm(), 'error':'Invalid Login Details!'})
-    else:
-        messages.error(request,'Please fill all fields')
-        return render(request,'authapp/loginuser.html', {'form':AuthenticationForm()})
+            messages.error(request,'Username Already exists')
+            return render(request,'authapp/register.html',context=context)
 
-class EmailThread(threading.Thread):
-	def __init__(self,email):
-		self.email = email
-		threading.Thread.__init__(self)
+class Login(View):
+
+    def get(self,request):
+        return render(request,'authapp/login.html')
+
+    def post(self,request):
+        username = request.POST.get('username','')
+        password = request.POST.get('password','')
+
+        context = {
+            "username":username,
+        }
+
+        if username == '':
+            messages.error(request,"Please Enter username")
+            return render(request,'authapp/login.html',context=context)
+
+        if password == '':
+            messages.error(request,"Please Enter Password")
+            return render(request,'authapp/login.html',context=context)
+
+        if username and password:
+            user = auth.authenticate(username=username,password=password)
+
+            if user:
+                if not user.is_active:
+                    messages.error(request,'Please Activate Account.')
+                    return render(request,'authapp/login.html',context=context)
+                elif user.is_active:
+                    auth.login(request,user)
+                    messages.success(request,"Welcome, "+ user.username + ". You are now logged in.")
+                    return redirect('index')
+            else:
+                messages.error(request,'Invalid credentials')
+                return render(request,'authapp/login.html',context=context)
+        else:
+            messages.error(request,'Something went wrong.')
+            return render(request,'authapp/login.html',context=context)
 
 
-	def run(self):
-		self.email.send(fail_silently = False)
+
+class Logout(View):
+	def post(self,request):
+		auth.logout(request)
+		messages.success(request,'Logged Out')
+		return redirect('login')
 
 
-# def password_rest(request):
-#     user = User.objects.get(username='john')
-#     user.set_password('new password')
-#     user.save()
+class Verification(View):
+
+	def get(self,request,uidb64,token):
+        
+		try:
+			id = force_text(urlsafe_base64_decode(uidb64))
+			user = User.objects.get(pk=id)
+
+			if not account_activation_token.check_token(user,token):
+				messages.error(request,'Already Activated')
+				return redirect('login')
+
+			if user.is_active:
+				return redirect('login')
+			user.is_active = True
+			user.save()
+			messages.success(request,'Account activated Sucessfully')
+			return redirect('login')
+		except Exception as e:
+			raise e
+		return redirect('login')
