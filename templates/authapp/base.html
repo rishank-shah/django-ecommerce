@@ -1,32 +1,19 @@
-<!-- CSS file excluded -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>{% block title_main %}  Base {% endblock %}</title
-       
-        <!-- Google Font -->
+        <title>{% block title_main %}Auth Index{% endblock %}</title>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
-        
-        <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-      
-		
+        <link href="{% static 'css/auth.css' %}" rel="stylesheet">     
     </head>
-
     <body>            
-           <div class="header home">
-			{% include 'partials/_navbar_auth.html' %}
-
-
-			{% block body %}
-
-
-			{% endblock %}
-
-                </div>
-		
+        <div class="header home">
+            {% include 'partials/_navbar_auth.html' %}
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

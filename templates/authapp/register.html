@@ -1,32 +1,29 @@
 {% extends 'authapp/base.html' %}
 {% load static %}
 {% block title_main %}Sign-Up{% endblock %}
-{% block body %}
-
-<link href="{% static 'css/auth.css' %}" rel="stylesheet">           
-<div class="hero row align-items-center">
-    <div class="col-md-7">
-    <h2>Best & Trusted</h2>
-    <h2><span>Techo</span> Shop</h2>
-    <p>High Performance. Delivered.</p>
-</div>
-<div class="col-md-5">
-    <div class="form">
-    <h3>Sign-Up</h3>
-    <form action="{% url 'register' %}" method="POST">
-	{% csrf_token %}
-	
-    <input class="form-control" type="text" name="f_name" id="f_name" placeholder="First Name">
-    <input class="form-control" type="text" name="l_name" id="l_name" placeholder="Last Name">
-    <input class="form-control" type="text"  name="mobile_no" id="mobile_no" placeholder="Mobile Number">
-	<input class="form-control" type="text" name="u_name" id="u_name" placeholder="User Name">
-    <input class="form-control" type="text"  name="email_1" id="email_1" placeholder="Email ID">
-    <input class="form-control" type="password" name="password" id="password" placeholder="Password">
-    <i class="far fa-eye" id="togglePassword1"></i>
-    <button class="btn btn-block" type="submit">Sign Up</button>
-    </form>
+{% block body %}      
+    <div class="hero row align-items-center">
+        <div class="col-md-7">
+        <h2>Best & Trusted</h2>
+        <h2><span>Techo</span> Shop</h2>
+        <p>High Performance. Delivered.</p>
     </div>
-</div>
-<script src = "{% static 'js/signup.js' %}" type="text/javascript"></script>
-
+    <div class="col-md-5">
+        <div class="form">
+            <h3>Sign-Up</h3>
+            <form action="{% url 'register' %}" method="POST">
+                {% csrf_token %}
+                
+                <input class="form-control" type="text" name="f_name" id="f_name" placeholder="First Name">
+                <input class="form-control" type="text" name="l_name" id="l_name" placeholder="Last Name">
+                <input class="form-control" type="text"  name="mobile_no" id="mobile_no" placeholder="Mobile Number">
+                <input class="form-control" type="text" name="u_name" id="u_name" placeholder="User Name">
+                <input class="form-control" type="text"  name="email_1" id="email_1" placeholder="Email ID">
+                <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                <i class="far fa-eye" id="togglePassword1"></i>
+                <button class="btn btn-block" type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+    <script src = "{% static 'js/signup.js' %}" type="text/javascript"></script>
 {% endblock %}
