@@ -1,0 +1,6 @@
+{{product.name}}
+{{product.category}}
+{{product.description}}
+{% for image in product.get_all_images %}
+  <img src={{ image.images.url }}></img>
+{% endfor %}

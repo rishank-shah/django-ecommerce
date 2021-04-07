@@ -1,0 +1,8 @@
+{% include "partials/_messages.html" %}
+{% for product in products %}
+  {{product.name}}
+  {{product.category}}
+  {{product.description}}
+  <img src={{ product.thumbnail.url }}></img>
+  <a href={{product.get_absolute_url}}>Link To Product</a>
+{% endfor %}
