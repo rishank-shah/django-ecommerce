@@ -6,6 +6,7 @@
 - [git-bash](https://git-scm.com/downloads)
 - [postgresql](https://www.postgresql.org/download/)
 - [Gmail account with less secure apps on](https://www.google.com/intl/en-GB/gmail/about/#)
+- [ElasticSearch](https://www.elastic.co/downloads/elasticsearch)
 
 ##### NOTE : If running on windows please use git-bash
 
@@ -15,7 +16,7 @@ git clone https://github.com/rishank-shah/django-ecommerce.git
 cd django-ecommerce
 cp .env.example .env
 ```
-##### Fill the .env file with the correct database and email credentials then in terminal execute following commands
+##### Fill the .env file with the correct database, email credentials and elasticsearch url then in terminal execute following commands
 
 ```
 virtualenv venv

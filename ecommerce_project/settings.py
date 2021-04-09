@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authapp',
-    'products'
+    'products',
+    "django_elasticsearch_dsl"
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,9 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': os.environ.get('ELASTICSEARCH_HOST')
+    },
+}
