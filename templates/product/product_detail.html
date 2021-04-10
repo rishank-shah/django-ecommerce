@@ -1,6 +1,7 @@
-{{product.name}}
-{{product.category}}
-{{product.description}}
+Name: {{product.name}}
+Category: {{product.category.category_name}}
+Company: {{product.company.company_name}}
+Desc: {{product.description}}
 {% for image in product.get_all_images %}
   <img src={{ image.images.url }}></img>
 {% endfor %}

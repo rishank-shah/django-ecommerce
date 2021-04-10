@@ -1,4 +1,3 @@
-{% load product_html_tags %}
 {% include "partials/_messages.html" %}
 <form method="GET">
   <input id="q" name="q" type="text" placeholder="Search..." ></input>
@@ -6,17 +5,19 @@
 {% if json %}
   <h1>Found {{ count }} products</h1>
   {% for product in products %}
-    {{ product | get_value_from_dict:"name" }}
-    {{ product | get_value_from_dict:"category" }}
-    {{ product | get_value_from_dict:"description" }}
-    <img src={{product | get_value_from_dict:"thumbnail"}}></img>
-    <a href = "/product/{{ product | get_value_from_dict:'slug' }}">Link To Product</a>
+    Name: {{ product.name }}
+    Category: {{ product.category.category_name }}
+    Company: {{ product.company.company_name }}
+    Desc: {{ product.description }}
+    <img src={{product.thumbnail}}></img>
+    <a href = "/product/{{ product.slug }}">Link To Product</a>
   {% endfor %}
 {% else %}
   {% for product in products %}
-    {{product.name}}
-    {{product.category}}
-    {{product.description}}
+    Name: {{product.name}}
+    Category: {{product.category.category_name}}
+    Company: {{product.company.company_name}}
+    Desc: {{product.description}}
     <img src={{ product.thumbnail.url }}></img>
     <a href={{product.get_absolute_url}}>Link To Product</a>
   {% endfor %}

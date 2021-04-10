@@ -47,7 +47,7 @@ def all_products(request):
             messages.error(request,'No Product found')
             return redirect('all_products')
     else:
-        products = Product.objects.all().order_by('-timestamp')
+        products = Product.objects.all().order_by('-created_at')
 
     return render(request,'product/all_products.html',{
         'products': products
