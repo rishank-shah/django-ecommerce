@@ -143,24 +143,24 @@ MESSAGE_TAGS = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     STATIC_DIR
 ]
-
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
+# Media Files
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+# CLOUDINARY CONFIG
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 CLOUDINARY_STORAGE = {
   'CLOUD_NAME': 'ecommercebart',
   'API_KEY': int(os.environ.get('API_KEY')), 
   'API_SECRET': str(os.environ.get('API_SECRET')),
 }
 
+# EMAIL CONFIG
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
@@ -169,8 +169,14 @@ DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
 
+# ELASTICSEARCH CONFIG
 ELASTICSEARCH_DSL={
     'default': {
         'hosts': os.environ.get('ELASTICSEARCH_HOST')
     },
 }
+
+# CELERY CONFIG
+CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

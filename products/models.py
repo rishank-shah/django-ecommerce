@@ -5,6 +5,7 @@ from .utils import (
     unique_slug_generator_using_name
 )
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 class Category(models.Model):
 
@@ -44,6 +45,13 @@ class Product(models.Model):
     company = models.ForeignKey(
         to = Company,
         on_delete = models.CASCADE,
+    )
+    is_draft = models.BooleanField(
+        default = False,
+        help_text=_(
+            'Checking this box will not show this product on main page.'
+            'Select this instead of deleting product.'
+        ),
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

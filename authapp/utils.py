@@ -6,6 +6,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode
 from django.urls import reverse
 from django.core.mail import EmailMessage
+from .tasks import auth_email_task
 
 class AppTokenGenerator(PasswordResetTokenGenerator):
 
@@ -14,21 +15,21 @@ class AppTokenGenerator(PasswordResetTokenGenerator):
 
 account_activation_token = AppTokenGenerator()
 
-def email_register(request,user,email):
+def email_register(request,user,email_to):
     uidb64 = urlsafe_base64_encode(force_bytes(user.pk))			
     domain = get_current_site(request).domain
-    link = reverse('activate',kwargs={'uidb64':uidb64,'token':account_activation_token.make_token(user)})
-    activate_url = 'http://' + domain + link
-    email_subject = 'Activate your Ecommerce Website Account'
-    email_body = 'Hi ' + user.username + '. Please use this link to verify your account\n' + activate_url
-    fromEmail = 'noreply@ecommerce.com'
-    email = EmailMessage(
-        email_subject,
-        email_body,
-        fromEmail,
-        [email],
+    link = reverse(
+        'activate',
+        kwargs={
+            'uidb64':uidb64,
+            'token':account_activation_token.make_token(user)
+        }
     )
-    EmailThread(email).start()
+    activate_url = f'http://{domain}{link}'
+    email_subject = 'Activate your Ecommerce Website Account'
+    email_body = f'Hi {user.username}. Please use this link to verify your account\n {activate_url}'
+    fromEmail = 'noreply@ecommerce.com'
+    auth_email_task.delay(email_subject,email_body,fromEmail,email_to)
 
 class EmailThread(threading.Thread):
 	def __init__(self,email):
