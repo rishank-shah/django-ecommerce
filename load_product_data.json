@@ -1,0 +1,264 @@
+[
+{
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+        "slug": "laptop",
+        "category_name": "Laptop",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+        "slug": "computer",
+        "category_name": "Computer",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+        "slug": "monitor",
+        "category_name": "Monitor",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+        "slug": "keyboard",
+        "category_name": "Keyboard",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 1,
+    "fields": {
+        "slug": "dell",
+        "company_name": "DELL",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 2,
+    "fields": {
+        "slug": "hp",
+        "company_name": "HP",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 3,
+    "fields": {
+        "slug": "asus",
+        "company_name": "Asus",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 4,
+    "fields": {
+        "slug": "apple",
+        "company_name": "Apple",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 5,
+    "fields": {
+        "slug": "hyperx",
+        "company_name": "HyperX",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 6,
+    "fields": {
+        "slug": "skyloong",
+        "company_name": "Skyloong",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.company",
+    "pk": 7,
+    "fields": {
+        "slug": "lenovo",
+        "company_name": "Lenovo",
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "slug": "apple-macbook-air",
+        "name": "Apple MacBook Air",
+        "category": 1,
+        "description": "Our thinnest, lightest notebook, completely transformed by the Apple M1 chip. CPU speeds up to 3.5x faster. GPU speeds up to 5x faster. Our most advanced Neural Engine for up to 9x faster machine learning. The longest battery life ever in a MacBook Air. And a silent, fanless design. This much power has never been this ready to go.",
+        "thumbnail": "media/product_thumbnail/apple-macbook-air/Apple-MGND3HNA-Laptops-491946465-i-6-1200Wx1200H_bg9ivo",
+        "price": 100000,
+        "company": 4,
+        "is_draft": false,
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "slug": "asus-rog-zephyrus-g14",
+        "name": "ASUS - ROG Zephyrus G14",
+        "category": 1,
+        "description": "AMD 3rd Generation Ryzen 9. 14\" Full HD display with 120Hz refresh rate.16GB system memory for intense multitasking and gaming. Solid State Drive 1 TB.NVIDIA GeForce RTX 2060",
+        "thumbnail": "media/product_thumbnail/asus-rog-zephyrus-g14/G14_Black_and_White_0_b3sglp",
+        "price": 90000,
+        "company": 3,
+        "is_draft": false,
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "slug": "hyperx-alloy-origins-core",
+        "name": "Hyperx Alloy Origins Core",
+        "category": 4,
+        "description": "Ultra-compact, sturdy tenkeyless keyboard. Full aluminum body for extra rigidity and stability. Features the new HyperX mechanical switches. Three adjustable keyboard angles. RGB back-light keyboard",
+        "thumbnail": "media/product_thumbnail/hyperx-alloy-origins-core/HyperX-Alloy-Orgins-Core-TKL-5-160x160_jpmko8",
+        "price": 10000,
+        "company": 5,
+        "is_draft": false,
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "slug": "sk61-rgb",
+        "name": "SK61 RGB",
+        "category": 4,
+        "description": "Mechanical keyboard with hot-swappable Gateron optical key switches. ABS bottom shell with double-color ABS keycap.RGB backlit keyboard. Customization available both on-board & via software. Ergonomic keyboard design to offer the most comfortable gaming and work experience. Detachable USB Type-C cable. Supports 3-layer programmable download mode and powerful game macros. One year domestic warranty.",
+        "thumbnail": "media/product_thumbnail/sk61-rgb/GK61-black-2-min-160x160_de7jeh",
+        "price": 5000,
+        "company": 6,
+        "is_draft": false,
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "slug": "lenovo-ideacentre-3-desktop",
+        "name": "Lenovo IdeaCentre 3 Desktop",
+        "category": 2,
+        "description": "Enjoy ultra-fast multitasking on your desktop tower with an AMD Athlon mobile processor. Get incredible responsiveness when running multiple applications, watching movies, chatting with friends, or getting your work done with a PC that keeps up with you. No need to worry about storage space with the IdeaCentre 3 you can store plenty of photos, music, and other files on its 256GB solid state drive on this desktop PC Connect all the peripherals you need you have six USB 2.0 ports to choose from, plus two USB 3.1 ports, a 7-in-1 card reader, and an HDMI port for all your connections The 7-liter IdeaCentre 3 will fit just about anywhere in your home, measuring only 11.26\" x 10.63\" x 7.87\". Its contemporary silver finish is highlighted with a stylish wavy line design for an appealing, trendy look This Windows 10 desktop comes with a Bluetooth 4.0 Combo with Wi-Fi Card (2x2 Wi-Fi 802.11 AC)",
+        "thumbnail": "media/product_thumbnail/lenovo-ideacentre-3-desktop/21GZAkI0uL._AC_US40__sc6ags",
+        "price": 50000,
+        "company": 7,
+        "is_draft": false,
+        "created_at": "2021-04-12T03:32:20.340Z"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+        "product": 1,
+        "images": "media/product_image/apple-macbook-air/Apple-MGND3HNA-Laptops-491946465-i-3-1200Wx1200H_wg7qp2"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 2,
+    "fields": {
+        "product": 1,
+        "images": "media/product_image/apple-macbook-air/Apple-MGND3HNA-Laptops-491946465-i-2-1200Wx1200H_xgimfc"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+        "product": 1,
+        "images": "media/product_image/apple-macbook-air/Apple-MGND3HNA-Laptops-491946465-i-1-1200Wx1200H_ue2aj7"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+        "product": 2,
+        "images": "media/product_image/asus-rog-zephyrus-g14/ASUS-ROG-Zephyrus-G14_b37rm2"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+        "product": 2,
+        "images": "media/product_image/asus-rog-zephyrus-g14/71o6nKXmjTL._SL1500__xyfuzz"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+        "product": 3,
+        "images": "media/product_image/hyperx-alloy-origins-core/HyperX-Alloy-Orgins-Core-TKL-8-160x160_ws9byy"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+        "product": 3,
+        "images": "media/product_image/hyperx-alloy-origins-core/HyperX-Alloy-Orgins-Core-TKL-6-160x160_ccoqw9"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 12,
+    "fields": {
+        "product": 4,
+        "images": "media/product_image/sk61-rgb/GK61-black-3-min-160x160_vw7n4d"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 13,
+    "fields": {
+        "product": 4,
+        "images": "media/product_image/sk61-rgb/GK61-black-1-min-160x160_eojubl"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 14,
+    "fields": {
+        "product": 5,
+        "images": "media/product_image/lenovo-ideacentre-3-desktop/21ILtU0gAWL._AC_US40__ldslvd"
+    }
+},
+{
+    "model": "products.productimage",
+    "pk": 15,
+    "fields": {
+        "product": 5,
+        "images": "media/product_image/lenovo-ideacentre-3-desktop/21gW8v95eOL._AC_US40__tb0cdc"
+    }
+}
+]

@@ -7,12 +7,14 @@ class ProductDocument(Document):
 
     category = fields.ObjectField(
         properties={
+            'slug': fields.KeywordField(),
             'category_name': fields.TextField()
         }
     )
 
     company = fields.ObjectField(
         properties={
+            'slug': fields.KeywordField(),
             'company_name': fields.TextField()
         }
     )
@@ -27,7 +29,8 @@ class ProductDocument(Document):
             "name",
             "description",
             "slug",
-            "thumbnail"
+            "thumbnail",
+            "is_draft"
         ]
 
         related_models = [

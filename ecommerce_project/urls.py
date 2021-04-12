@@ -26,5 +26,9 @@ urlpatterns = [
     path('product/',include('products.urls'))
 ]
 
+admin.site.site_header = 'BART Ecommerce Admin'
+admin.site.index_title = 'BART Ecommerce'
+admin.site.site_title = 'BART Admin Site'
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

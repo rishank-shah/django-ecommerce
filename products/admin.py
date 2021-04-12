@@ -20,7 +20,12 @@ class ProductAdmin(admin.ModelAdmin):
         "company__company_name"
     ]
  
-    list_filter = [('created_at', DateTimeRangeFilter)]
+    list_filter = [
+        ('created_at', DateTimeRangeFilter),
+        'is_draft',
+        'category__category_name',
+        'company__company_name'
+    ]
 
     inlines = [ProductImageAdmin]
 
