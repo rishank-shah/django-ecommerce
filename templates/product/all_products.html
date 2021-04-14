@@ -5,22 +5,27 @@
 	<link href="{% static 'css/search.css' %}" rel="stylesheet">     
 	<div class="search-box" >
 		<form method="GET">
-			<h1 class="flex-container" style="padding-top: 10%; padding-bottom:5%;"> Search Products Online </h1>
-			<div><input class="form-control" id="q" name="q" type="text" placeholder="Search..." aria-label="Search" style="font-size: 16px; color: #43383e; line-height: 1.2; position: relative; display: block; height: 62px; background: #fff; border-radius: 31px;">
+			<h1 class="flex-container" style="padding-top: 10%; padding-bottom:5%;"> Search Products </h1>
+			<div><input class="form-control" id="q" name="q" type="text" placeholder="Search..." aria-label="Search" style="font-size: 16px; color: #43383e; line-height: 1.2; position: relative; display: block; height: 50px; background: #fff; border-radius: 35px;">
 			</input></div>
 		</form>
 	</div>
-
 	{% if json %}
-
-		<center><h1 style="font-family:'Rockwell'">Found {{ count }} products</h1></center><br>
-		  
+		<center>
+			<h1 style="font-family:'Rockwell'">
+				{% if count == 1 %}
+					Found 1 product
+				{% else %}
+					Found {{ count }} products
+				{% endif %}
+			</h1>
+		</center><br>
 		<div class="row justify-content-md-center">
 			<div class="col-3" style="padding-left: 1%">
-				{% include 'partials/_sidebar_auth.html' %}
+				{% include 'partials/_sidebar_product.html' %}
 			</div>
 			<div class="col-8">
-				<div class="row row-cols-1 row-cols-md-3 g-3">
+				<div class="row row-cols-1 row-cols-md-2 g-3">
 					{% for product in products %}
 						<div class="col">
 							<div class="card border-dark h-100">
@@ -31,8 +36,8 @@
 									<h6 class="card-title">{{product.category.category_name}}</h6>
 									<p class="card-text">{{product.description | truncatechars:100 }}</p>
 									<h6 class="card-title">Price: ₹{{product.price}}</h6>
-									<a class="btn btn-success" href="/product/{{ product.slug }}" >View More</a>
-									<a class="btn btn-primary" >Add to Cart</a>
+									<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href="/product/{{ product.slug }}" >View More</a>
+									<a class="btn btn-primary" style="margin-left: 15%;margin-right: 7%" >Add to Cart</a>
 								</div> 
 							</div>
 						</div>
@@ -43,7 +48,7 @@
 	{% else %}
 	<div class="row justify-content-md-center">
 		<div class="col-3" style="padding-left: 1%">
-			{% include 'partials/_sidebar_auth.html' %}
+			{% include 'partials/_sidebar_product.html' %}
 		</div>
 		<div class="col-8">
 			<div class="row row-cols-1 row-cols-md-2 g-3">

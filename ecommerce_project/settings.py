@@ -16,6 +16,8 @@ from django.contrib import messages
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -184,3 +186,13 @@ ELASTICSEARCH_DSL={
 CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+
+# Sentry Error Monitoring CONFIG
+if DEBUG == False and os.environ.get('SENTRY_DSN','') != '':
+    sentry_sdk.init(
+        dsn=os.environ.get('SENTRY_DSN'),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
+    )

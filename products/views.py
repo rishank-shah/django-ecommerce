@@ -1,7 +1,12 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import ProductImage,Product
+from .models import (
+    Product,
+    ProductImage,
+    Company,
+    Category
+)
 from django.contrib import messages
 from .documents import ProductDocument
 from django.conf import settings
@@ -9,11 +14,6 @@ from elasticsearch import Elasticsearch
 from django.contrib import messages
 from .search_query import search_product_query
 from django.shortcuts import get_object_or_404
-
-
-@login_required(login_url='login')
-def index(request):
-    return HttpResponse('Logged in')
 
 
 def all_products(request):
@@ -33,6 +33,8 @@ def all_products(request):
             return render(request,'product/all_products.html',{
                 'products': data,
                 'json':True,
+                'categories':Category.objects.all(),
+                'companies':Company.objects.all(),
                 'count':len(data)
             })
         else:
@@ -44,7 +46,9 @@ def all_products(request):
         ).order_by('-created_at')
 
     return render(request,'product/all_products.html',{
-        'products': products
+        'products': products,
+        'companies':Company.objects.all(),
+        'categories':Category.objects.all(),
     })
 
 

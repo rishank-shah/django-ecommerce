@@ -7,7 +7,7 @@
   * [Software Installation](#requirements-for-running-project)
   * [Accounts Required](#requirements-for-running-project)
 - [Steps for running project](#steps-for-running-project)
-  * [One Time Setup](#)
+  * [One Time Setup](#clone-repository)
     * [Clone Project](#clone-repository)
     * [Environment Setup](#environment-setup)
     * [Create DB in postgresql](#create-db)
@@ -32,7 +32,8 @@
   * [ElasticSearch](https://www.elastic.co/downloads/elasticsearch)
 - Accounts Required:
   * [Gmail account with less secure apps on](https://www.google.com/intl/en-GB/gmail/about/#)
-  * [Cloudinary Account](https://cloudinary.com/)
+  * [Cloudinary](https://cloudinary.com/)
+  * [Sentry](https://sentry.io/welcome/)
 
 <br/>
 
@@ -57,7 +58,7 @@ virtualenv venv
 ###### Create a DB in postgresql and enter the same DB name in the .env file
 
 ##### Fill .env file:
-###### Fill the .env file with the correct database, cloudinary, email credentials, elasticsearch and redis url.
+###### Fill the .env file with the correct database, cloudinary, email, sentry credentials, elasticsearch and redis url.
 
 ##### Installation of Dependencies:
 
