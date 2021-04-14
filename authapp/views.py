@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from django.contrib.auth.models import User
+from .models import User
 from django.contrib import messages
 from django.contrib import auth
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from .utils import email_register,account_activation_token
-from .models import UserProfileInfo
+
 
 class Registration(View):
 
@@ -40,20 +40,26 @@ class Registration(View):
                     messages.error(request,'Password is too short')
                     return render(request,'authapp/register.html',context=context)
                 
-                user = User.objects.create_user(username=username,email=email,first_name=first_name,last_name=last_name)
+                user = User.objects.create_user(
+                    username = username,
+                    email = email,
+                    first_name = first_name,
+                    last_name = last_name,
+                    phone_number = phone_number
+                )
                 user.set_password(password)
-                user.is_active = False
+                user.is_active = True
                 user.save()
-                UserProfileInfo.objects.create(user=user,phone_number=phone_number).save()
                 email_register(request,user,email)
                 messages.success(request,'Account Created Succesfully. Please Confirm Email')
-                return redirect('index')
+                return redirect('login')
             else:
                 messages.error(request,'Email Already exists')
                 return render(request,'authapp/register.html',context=context)
         else:
             messages.error(request,'Username Already exists')
             return render(request,'authapp/register.html',context=context)
+
 
 class Login(View):
 
@@ -77,23 +83,23 @@ class Login(View):
             return render(request,'authapp/login.html',context=context)
 
         if username and password:
-            user = auth.authenticate(username=username,password=password)
+            user = auth.authenticate(
+                username = username,
+                password = password
+            )
 
             if user:
-                if not user.is_active:
-                    messages.error(request,'Please Activate Account.')
-                    return render(request,'authapp/login.html',context=context)
-                elif user.is_active:
-                    auth.login(request,user)
-                    messages.success(request,"Welcome, "+ user.username + ". You are now logged in.")
-                    return redirect('index')
+                auth.login(request,user)
+                if not user.email_verified:
+                    messages.error(request,'Please verify your email account.')
+                messages.success(request,"Welcome, "+ user.username + ". You are now logged in.")
+                return redirect('all_products')
             else:
                 messages.error(request,'Invalid credentials')
                 return render(request,'authapp/login.html',context=context)
         else:
             messages.error(request,'Something went wrong.')
             return render(request,'authapp/login.html',context=context)
-
 
 
 class Logout(View):
@@ -114,10 +120,9 @@ class Verification(View):
 			if not account_activation_token.check_token(user,token):
 				messages.error(request,'Already Activated')
 				return redirect('login')
-
-			if user.is_active:
+			if user.email_verified:
 				return redirect('login')
-			user.is_active = True
+			user.email_verified = True
 			user.save()
 			messages.success(request,'Account activated Sucessfully')
 			return redirect('login')

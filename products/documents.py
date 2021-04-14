@@ -30,6 +30,7 @@ class ProductDocument(Document):
             "description",
             "slug",
             "thumbnail",
+            "price",
             "is_draft"
         ]
 
