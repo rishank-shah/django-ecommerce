@@ -1,24 +1,72 @@
-{% include "partials/_messages.html" %}
-<form method="GET">
-  <input id="q" name="q" type="text" placeholder="Search..." ></input>
-</form>
-{% if json %}
-  <h1>Found {{ count }} products</h1>
-  {% for product in products %}
-    Name: {{ product.name }}
-    Category: {{ product.category.category_name }}
-    Company: {{ product.company.company_name }}
-    Desc: {{ product.description }}
-    <img src={{product.thumbnail}}></img>
-    <a href = "/product/{{ product.slug }}">Link To Product</a>
-  {% endfor %}
-{% else %}
-  {% for product in products %}
-    Name: {{product.name}}
-    Category: {{product.category.category_name}}
-    Company: {{product.company.company_name}}
-    Desc: {{product.description}}
-    <img src={{ product.thumbnail.url }}></img>
-    <a href={{product.get_absolute_url}}>Link To Product</a>
-  {% endfor %}
-{% endif %}
+{% extends 'product/base.html' %}
+{% load static %}
+{% block body %}  
+	{% include "partials/_messages.html" %}
+	<link href="{% static 'css/search.css' %}" rel="stylesheet">     
+	<div class="search-box" >
+		<form method="GET">
+			<h1 class="flex-container" style="padding-top: 10%; padding-bottom:5%;"> Search Products Online </h1>
+			<div><input class="form-control" id="q" name="q" type="text" placeholder="Search..." aria-label="Search" style="font-size: 16px; color: #43383e; line-height: 1.2; position: relative; display: block; height: 62px; background: #fff; border-radius: 31px;">
+			</input></div>
+		</form>
+	</div>
+
+	{% if json %}
+
+		<center><h1 style="font-family:'Rockwell'">Found {{ count }} products</h1></center><br>
+		  
+		<div class="row justify-content-md-center">
+			<div class="col-3" style="padding-left: 1%">
+				{% include 'partials/_sidebar_auth.html' %}
+			</div>
+			<div class="col-8">
+				<div class="row row-cols-1 row-cols-md-3 g-3">
+					{% for product in products %}
+						<div class="col">
+							<div class="card border-dark h-100">
+								<a href="/product/{{ product.slug }}">
+								<img src="{{product.thumbnail}}" height="300px" class="card-img-top" alt="Cant Load Image"></a>
+								<div class="card-body">
+									<h5 class="card-title">{{product.name}}</h5>
+									<h6 class="card-title">{{product.category.category_name}}</h6>
+									<p class="card-text">{{product.description | truncatechars:100 }}</p>
+									<h6 class="card-title">Price: ₹{{product.price}}</h6>
+									<a class="btn btn-success" href="/product/{{ product.slug }}" >View More</a>
+									<a class="btn btn-primary" >Add to Cart</a>
+								</div> 
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		 </div>
+	{% else %}
+	<div class="row justify-content-md-center">
+		<div class="col-3" style="padding-left: 1%">
+			{% include 'partials/_sidebar_auth.html' %}
+		</div>
+		<div class="col-8">
+			<div class="row row-cols-1 row-cols-md-2 g-3">
+				{% for product in products %}
+					<div class="col">
+						<div class="card border-dark h-100">
+							<a href={{product.get_absolute_url}}>
+							<img src="{{ product.thumbnail.url }}" height="300px" class="card-img-top" alt="Cant Load Image"></img></a>
+							<div class="card-body">
+								<h5 class="card-title">{{product.name}}</h5>
+								<h6 class="card-title">{{product.category.category_name}}</h6>
+								<!-- Company: {{product.company.company_name}} -->
+								<p class="card-text">{{product.description | truncatechars:100 }}</p>
+								<h6 class="card-title">Price: ₹{{product.price}}</h6>
+								<br/>
+								<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href={{product.get_absolute_url}} >View More</a>
+								<a class="btn btn-primary" style="margin-left: 15%;margin-right: 7%" >Add to Cart</a>
+							</div> 
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
