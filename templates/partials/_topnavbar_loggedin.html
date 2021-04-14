@@ -1,0 +1,41 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>	
+<link href="{% static 'css/search.css' %}" rel="stylesheet">     
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<div class="container-fluid">
+		<a class="navbar-brand fw-bolder fs-4" href=".">BART E-Commerce</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+	<form >
+		<ul class="navbar-nav">
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary"><!--img src="https://res.cloudinary.com/ecommercebart/image/upload/v1618326326/v1/480-4803616_amazon-shopping-cart-icon-quotes-of-the-day_kz5wlr.png" width="33px" height="33px" margin-top="-10px"></img-->
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+				<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>
+				</button>
+			</div>
+			{% if request.user.is_authenticated %}
+				<li class="nav-item dropdown">
+					  <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						{{ request.user.username }}
+					  </a>
+					  <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" name="Profile">Profile</a></li>
+						<li><a class="dropdown-item" name="Settings">Settings</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" onclick="document.getElementById('formnew').submit()" name="Logout">Logout</a></li>
+					  </ul>
+				</li>
+			{% else %}
+			<form>
+				<a class="btn btn-success" style="margin-right: 30%" href="{% url 'login' %}">Login</a>
+			</form>
+			{% endif %}
+		</ul>
+	</form>
+</nav>
+
+<form action="{% url 'logout' %}" id = "formnew" method="POST">{% csrf_token %}</form>
+ 
