@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, UserAddress
 from django.contrib.auth.admin import UserAdmin
 from rangefilter.filter import DateTimeRangeFilter
 
@@ -34,3 +34,22 @@ class CustomUserAdmin(UserAdmin):
     ]
     
     date_hierarchy = "date_joined"
+
+
+@admin.register(UserAddress)
+class UserAddressAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'city',
+        'state'
+    )
+
+    search_fields = [
+        'user',
+        'city',
+        'state',
+        'zipcode',
+    ]
+    
+    class Meta:
+       model = UserAddress

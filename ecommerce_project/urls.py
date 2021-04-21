@@ -18,12 +18,15 @@ from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
 from products.views import all_products
+from products import views
+
 
 urlpatterns = [
     path('',all_products,name="all_products"),
     path('admin/', admin.site.urls),
     path('authentication/', include('authapp.urls')),
-    path('product/',include('products.urls'))
+    path('product/',include('products.urls')),
+    path('cart/',include('products.cart_urls')),
 ]
 
 admin.site.site_header = 'BART Ecommerce Admin'

@@ -17,3 +17,30 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class UserAddress(models.Model):
+    user = models.ForeignKey(
+        "authapp.User",
+        on_delete=models.CASCADE
+    )
+    address = models.CharField(
+        max_length=400,
+        null=False
+    )
+    city = models.CharField(
+        max_length=100,
+        null=False
+    )
+    state = models.CharField(
+        max_length=100,
+        null=False
+    )
+    zipcode = models.CharField(
+        max_length=6,
+        null=False
+    )
+
+    def __str__(self):
+        return self.user.username + " - " + self.address
+    

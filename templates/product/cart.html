@@ -1,0 +1,136 @@
+{% extends 'product/base.html' %}
+{% load static %}
+{% block body %}  
+{% include "partials/_messages.html" %}
+<style>
+    .cart-row{
+        display: flex;
+        align-items: flex-stretch;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ececec;
+    }
+
+    .row-image{
+        width: 100px;
+    }
+
+    .quantity{
+        display: inline-block;
+        font-weight: 700;
+        padding-right: 10px;
+    }
+
+    .chg-quantity{
+	width: 12px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+    }
+    
+    .update-quantity{
+        display: flex;
+        align-items:baseline;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+                <a class='btn btn-outline-dark' href="{% url 'all_products' %}">&#x2190;   Continue Shopping</a>
+                <br>
+                <br>
+
+                <table class="table">
+                    <tr>
+                        <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
+                        <th><h5>Total: <strong>₹{{ order.get_cart_total }}</strong></h5></th>
+                        <th>
+                            <a style="float: right; margin: 5px;" id="checkout" class='btn btn-success' href="{% url 'checkout' %}">Checkout</a>
+                        </th>
+                    </tr>
+
+                </table>
+            </div>
+            <br>
+            <div class="box-element">
+                <div class="cart-row">
+                    <div style="flex:2"></div>
+                    <div style="flex:2"><strong>Item</strong></div>
+                    <div style="flex:1"><strong>Price</strong></div>
+                    <div style="flex:1"><strong>Quantity</strong></div>
+                    <div style="flex:1"><strong>Total</strong></div>
+                </div>
+
+                {% for item in orderitems %}
+                <div class="cart-row">
+                    <div style="flex:2"><img class="row-image" src=""></div>
+                    <div style="flex:2">{{ item.product.name }}</div>
+                    <div style="flex:1">₹{{ item.product.price }}</div>
+                    <div style="flex:1" class="update-quantity">
+                        <button style="border:none; background-color: inherit; flex: 0;" data-product="{{ item.product.id }}" data-action="add" class="update-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
+                                <g id="Group_1" data-name="Group 1" transform="translate(-354 -226)">
+                                  <line id="Line_1" data-name="Line 1" x2="10" transform="translate(354.5 231.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
+                                  <line id="Line_2" data-name="Line 2" x2="10" transform="translate(359.5 226.5) rotate(90)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
+                                </g>
+                            </svg>
+                        </button>
+                        <p style="flex: 0;">&nbsp;&nbsp;{{ item.quantity }}&nbsp;&nbsp;</p>
+                        <button style="border:none; background-color: inherit; flex: 0;" data-product="{{ item.product.id }}" data-action="remove" class="update-cart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="1" viewBox="0 0 11 1">
+                                <line id="Line_3" data-name="Line 3" x2="10" transform="translate(0.5 0.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div style="flex:1">₹{{ item.get_total }}</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if not request.user.is_authenticated %}
+                <label for="inputName">Username</label>
+                <input type="username" name="inputName" class="form-control" id="inputName" placeholder="Enter Name" required>
+                <label for="inputEmail">Email address</label>
+                <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    var email = document.getElementById("inputEmail").value;
+    var username = document.getElementById("inputName").value;
+    
+    document.getElementById('checkout').addEventListener('click', function(e){
+        userFormData()
+    })
+    
+    function userFormData(){
+
+        userInfo = {
+            'username':username,
+            'email':email,
+        }
+
+    var url = '/cart/checkout.html/'
+
+    fetch(url, {
+        method:'POST',
+        headers:{
+            'content-Type':'application/json',
+            'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'userInfo':userInfo})
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Success: ', data);
+    })
+
+}
+
+</script>
+
+
+{% endblock %}

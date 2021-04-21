@@ -1,3 +1,5 @@
+from django.http import request
+from authapp.models import User, UserAddress
 from django.db import models
 from .utils import (
     product_image_directory_path,
@@ -128,3 +130,63 @@ class ProductImage(models.Model):
     def __str__(self):
         return self.product.name
 
+
+class Order(models.Model):
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    date_created = models.DateTimeField(auto_now_add=True)
+    shipping_address = models.ForeignKey(UserAddress, on_delete=models.SET_NULL, blank=True, null=True)
+    completed = models.BooleanField(default=False)
+    transaction_id = models.CharField(max_length=200, null=True)
+
+    @property
+    def get_cart_total(self):
+        orderitems = OrderItem.objects.filter(order=self)
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = OrderItem.objects.filter(order=self)
+        total = int(sum([item.quantity for item in orderitems]))
+        return total
+
+    def __str__(self):
+        return self.user.username + " - " + str(self. date_created)
+
+
+class OrderItem(models.Model):
+    
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+    quantity = models.PositiveIntegerField(
+        default=0,
+        null=True,
+        blank=True
+    )
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.quantity
+        return total
+
+    def __str__(self):
+        return self.product.name + " - " + str(self.order.id)
+
+    

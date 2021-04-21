@@ -37,7 +37,7 @@
 									<p class="card-text">{{product.description | truncatechars:100 }}</p>
 									<h6 class="card-title">Price: ₹{{product.price}}</h6>
 									<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href="/product/{{ product.slug }}" >View More</a>
-									<a class="btn btn-primary" style="margin-left: 15%;margin-right: 7%" >Add to Cart</a>
+									<button data-product="{{ product.id }}" data-action="add" class="btn btn-primary update-cart" style="margin-left: 15%;margin-right: 7%" >Add to Cart</button>
 								</div> 
 							</div>
 						</div>
@@ -65,7 +65,16 @@
 								<h6 class="card-title">Price: ₹{{product.price}}</h6>
 								<br/>
 								<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href={{product.get_absolute_url}} >View More</a>
-								<a class="btn btn-primary" style="margin-left: 15%;margin-right: 7%" >Add to Cart</a>
+								<button data-product="{{ product.id }}" data-action="add" class="btn btn-primary update-cart" Z style="margin-left: 15%;margin-right: 7%" >Add to Cart</button>
+								<div>
+									<label for="select">Qty</label>
+									<select id="select" class="h6 store-select-dropdown">
+									  <option value="1">1</option>
+									  <option value="2">2</option>
+									  <option value="3">3</option>
+									  <option value="4">4</option>
+									</select>
+								  </div>
 							</div> 
 						</div>
 					</div>
@@ -74,4 +83,5 @@
 			{% endif %}
 		</div>
 	</div>
+
 {% endblock %}

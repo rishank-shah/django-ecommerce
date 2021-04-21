@@ -1,0 +1,101 @@
+{% extends 'product/base.html' %}
+{% load static %}
+{% block body %}  
+{% include "partials/_messages.html" %}
+<style>
+    .cart-row{
+        display: flex;
+        align-items: flex-stretch;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ececec;
+    }
+</style>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron">
+                <div class="box-element">
+                    <a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+                    <br>
+                    <br>
+                    <hr>
+                    <h3>Order Summary</h3>
+                    <hr>
+                    {% for item in orderitems %}
+                    <div style="display: flex;" class="cart-row">
+                        <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                        <div style="flex:2"><p>{{item.product.name}}</p></div>
+                        <div style="flex:1"><p>₹{{item.product.price}}</p></div>
+                        <div style="flex:1"><p>x{{item.quantity}}</p></div>
+                    </div>
+                    {% endfor %}
+                    <h5>Items:   {{order.get_cart_items}}</h5>
+                    <h5 value="{{ order.get_cart_total }}">Total:   ₹{{order.get_cart_total}}</h5>
+                </div>
+            </div>
+
+            <div>
+                <h3>Select an address</h3>
+                <!-- dropdown menu to select addresses -->
+                <select id="address-select" class="h6 store-select-dropdown">
+                {% for add in useraddress %}
+                    <option value="{{ add.id }}">{{ add.address }}, {{ add.city }}-{{ add.zipcode }}, {{add.state}}.</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <br>
+            <div class="box-element hidden" id="payment-info">
+                <label for="process_order"><strong>Paypal Option</strong></label>
+                <a name="process_order" id="process_order" href="#" class="btn btn-success btn-block">Make payment</a>
+            </div>
+    
+        </div>
+    
+    </div>
+
+    <script>
+        var total = '{{order.get_cart_total}}'
+        var select_address = document.getElementById("address-select").options;
+        
+        
+        document.getElementById('process_order').addEventListener('click', function(e){
+            submitFormData()
+        })
+        
+        function submitFormData(){
+            console.log('Payment Button clicked')
+            var selected_address = document.getElementById("address-select").selectedIndex;
+            var address_id = (select_address[selected_address].value)
+            
+            var orderInfo = {
+                'id':address_id,
+                'total':total,
+            }
+
+            var url = '/cart/process_order/'
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'content-Type':'application/json',
+                    'X-CSRFToken':csrftoken,
+                },
+                body:JSON.stringify({'orderInfo':orderInfo})
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success: ', data);
+                alert('Transaction completed');
+
+                cart = {}
+                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+                window.location.href = "{% url 'all_products' %}"
+            })
+
+        }
+    </script>
+
+
+
+{% endblock %}
