@@ -1,74 +1,56 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="cart.css" rel="stylesheet">
 {% extends 'product/base.html' %}
 {% load static %}
 {% block body %}  
 {% include "partials/_messages.html" %}
-<style>
-    .cart-row{
-        display: flex;
-        align-items: flex-stretch;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ececec;
-    }
-
-    .row-image{
-        width: 100px;
-    }
-
-    .quantity{
-        display: inline-block;
-        font-weight: 700;
-        padding-right: 10px;
-    }
-
-    .chg-quantity{
-	width: 12px;
-	cursor: pointer;
-	display: block;
-	margin-top: 5px;
-	transition:.1s;
-    }
-    
-    .update-quantity{
-        display: flex;
-        align-items:baseline;
-    }
-</style>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box-element">
-                <a class='btn btn-outline-dark' href="{% url 'all_products' %}">&#x2190;   Continue Shopping</a>
+<div id = "wave"> 
+    <div class="px-4 px-lg-0">
+    <div class="container text-white py-5 text-center">
+      <h1 class="display-4">Shopping Cart</h1>
+    </div> 
+    <div class="pb-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+  
+            <!-- Shopping cart table -->
+            <div class="table-responsive">
+              <a class='btn btn-dark rounded-pill py-2 btn-block' href="{% url 'all_products' %}">&#x2190;   Continue Shopping</a>
                 <br>
                 <br>
-
-                <table class="table">
-                    <tr>
-                        <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
-                        <th><h5>Total: <strong>₹{{ order.get_cart_total }}</strong></h5></th>
-                        <th>
-                            <a style="float: right; margin: 5px;" id="checkout" class='btn btn-success' href="{% url 'checkout' %}">Checkout</a>
-                        </th>
-                    </tr>
-
-                </table>
-            </div>
-            <br>
-            <div class="box-element">
-                <div class="cart-row">
-                    <div style="flex:2"></div>
-                    <div style="flex:2"><strong>Item</strong></div>
-                    <div style="flex:1"><strong>Price</strong></div>
-                    <div style="flex:1"><strong>Quantity</strong></div>
-                    <div style="flex:1"><strong>Total</strong></div>
-                </div>
-
-                {% for item in orderitems %}
-                <div class="cart-row">
-                    <div style="flex:2"><img class="row-image" src=""></div>
-                    <div style="flex:2">{{ item.product.name }}</div>
-                    <div style="flex:1">₹{{ item.product.price }}</div>
-                    <div style="flex:1" class="update-quantity">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="p-2 px-3 text-uppercase">Product</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase">Price</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase">Quantity</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                      <div class="py-2 text-uppercase">Total</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in orderitems %}
+                  <tr>
+                    <th scope="row" class="border-0">
+                      <div class="p-2">
+                        <img src="https://www.zotac.com/download/files/styles/w1024/public/product_gallery/graphics_cards/zt-a30800d-10p-image01_0.jpg?itok=YKGgElPU" alt="" width="70" class="img-fluid rounded shadow-sm">
+                        <div class="ml-3 d-inline-block align-middle">
+                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Graphics Card</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="border-0 align-middle"><strong>₹{{ item.product.price }}</strong></td>
+                    <td class="border-0 align-middle">
+                      <div style="flex:1" class="update-quantity">
                         <button style="border:none; background-color: inherit; flex: 0;" data-product="{{ item.product.id }}" data-action="add" class="update-cart">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
                                 <g id="Group_1" data-name="Group 1" transform="translate(-354 -226)">
@@ -83,54 +65,93 @@
                                 <line id="Line_3" data-name="Line 3" x2="10" transform="translate(0.5 0.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
                             </svg>
                         </button>
-                    </div>
-                    <div style="flex:1">₹{{ item.get_total }}</div>
-                </div>
-                {% endfor %}
+                      </div>
+                    </td>
+                    <td class="border-0 align-middle"><strong>₹{{ item.get_total }}</strong></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
-            {% if not request.user.is_authenticated %}
-                <label for="inputName">Username</label>
-                <input type="username" name="inputName" class="form-control" id="inputName" placeholder="Enter Name" required>
-                <label for="inputEmail">Email address</label>
-                <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
-            {% endif %}
+            <!-- End -->
+          </div>
         </div>
+  
+        <div class="row py-5 p-4 bg-white rounded shadow-sm">
+          {% if not request.user.is_authenticated %}
+          <div class="col-lg-6">
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Log In</div>
+            <div class="p-4">
+              <label for="inputName" class="font-italic mb-4">Username:</p>
+              <div class="input-group mb-4 border rounded-pill p-2">
+                <input type="username" placeholder="Enter Name" aria-describedby="button-addon3" class="form-control border-0" id = "inputName" required>
+              </div>
+              <label for = "inputEmail" class="font-italic mb-4">Email address:</p>
+              <div class="input-group mb-4 border rounded-pill p-2">
+                <input type="email" id = "inputEmail" placeholder="Enter Name" aria-describedby="button-addon3" class="form-control border-0" required>
+              </div>
+            </div>
+            {% endif %}
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
+            <div class="p-4">
+              <p class="font-italic mb-4">If you have some information for the seller you can leave them in the box below</p>
+              <textarea name="" cols="30" rows="2" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-6" style = "margin: auto" >
+            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+            <div class="p-4">
+              <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+              <ul class="list-unstyled mb-4">
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>₹{{ order.get_cart_total }}</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                  <h5 class="font-weight-bold">$400.00</h5>
+                </li>
+              </ul><a id = "checkout" href="{% url 'checkout' %}" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+            </div>
+          </div>
+        </div>
+  
+      </div>
     </div>
+  </div>
 </div>
-
 <script>
-    var email = document.getElementById("inputEmail").value;
-    var username = document.getElementById("inputName").value;
-    
-    document.getElementById('checkout').addEventListener('click', function(e){
-        userFormData()
-    })
-    
-    function userFormData(){
+  var email = document.getElementById("inputEmail").value;
+  var username = document.getElementById("inputName").value;
+  
+  document.getElementById('checkout').addEventListener('click', function(e){
+      userFormData()
+  })
+  
+  function userFormData(){
 
-        userInfo = {
-            'username':username,
-            'email':email,
-        }
+      userInfo = {
+          'username':username,
+          'email':email,
+      }
 
-    var url = '/cart/checkout.html/'
+  var url = '/cart/checkout.html/'
 
-    fetch(url, {
-        method:'POST',
-        headers:{
-            'content-Type':'application/json',
-            'X-CSRFToken':csrftoken,
-        },
-        body:JSON.stringify({'userInfo':userInfo})
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log('Success: ', data);
-    })
+  fetch(url, {
+      method:'POST',
+      headers:{
+          'content-Type':'application/json',
+          'X-CSRFToken':csrftoken,
+      },
+      body:JSON.stringify({'userInfo':userInfo})
+  })
+  .then((response) => response.json())
+  .then((data) => {
+      console.log('Success: ', data);
+  })
 
 }
 
 </script>
-
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 {% endblock %}
