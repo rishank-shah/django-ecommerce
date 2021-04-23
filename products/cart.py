@@ -113,9 +113,16 @@ def guest_user_cart(request, data):
 def cart_email(request):
 
     first_name = request.user.first_name
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    orderitems = data['orderitems']
+
     context = {
         'first_name': first_name,
-        # products
+        'orderitems':orderitems,
+        'order':order,
+        'cartItems':cartItems
     }
     
     template = render_to_string('product/cart_email_template.html',context)
