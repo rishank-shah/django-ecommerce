@@ -20,33 +20,48 @@
 				{% endif %}
 			</h1>
 		</center><br>
-		<div class="row justify-content-md-center">
+		<div class="row justify-content-md-center" style="margin: auto">
 			<div class="col-3" style="padding-left: 1%">
 				{% include 'partials/_sidebar_product.html' %}
 			</div>
 			<div class="col-8">
 				<div class="row row-cols-1 row-cols-md-2 g-3">
 					{% for product in products %}
-						<div class="col">
-							<div class="card border-dark h-100">
+					<div class="col">
+						<div class="card border-light  h-100"> <!--  border-light -->
+						<div class="product-card">
+							<div class="product-tumb">
 								<a href="/product/{{ product.slug }}">
-								<img src="{{product.thumbnail}}" height="300px" class="card-img-top" alt="Cant Load Image"></a>
-								<div class="card-body">
-									<h5 class="card-title">{{product.name}}</h5>
-									<h6 class="card-title">{{product.category.category_name}}</h6>
-									<p class="card-text">{{product.description | truncatechars:100 }}</p>
-									<h6 class="card-title">Price: ₹{{product.price}}</h6>
-									<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href="/product/{{ product.slug }}" >View More</a>
-									<button data-product="{{ product.id }}" data-action="add" class="btn btn-primary update-cart" style="margin-left: 15%;margin-right: 7%" >Add to Cart</button>
-								</div> 
+									<img src="{{ product.thumbnail }}" style=" height: 300px; width: 380px;" class="card-img-top" alt="Cant Load Image"></img></a>
 							</div>
-						</div>
+							<div class="product-details">
+								<span class="product-catagory">{{product.category.category_name}}</span>
+								<h4><a href="/product/{{ product.slug }}">{{product.name}}</a></h4>
+								<p>{{product.description | truncatechars:100 }}</p>
+								<div class="product-bottom-details">
+									<div class="product-price">₹{{product.price}}</div>
+									<div class="product-links">
+										<a href="">
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+												<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+											  </svg>
+										</a>
+										<button data-product="{{ product.id }}" data-action="add" class="update-cart" >
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+												<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+											  </svg>
+											</button>
+									</div>
+								</div>
+							</div>
+						</div></div>
+					</div>
 					{% endfor %}
 				</div>
 			</div>
 		 </div>
 	{% else %}
-	<div class="row justify-content-md-center">
+	<div class="row justify-content-md-center" style="margin: auto">
 		<div class="col-3" style="padding-left: 1%">
 			{% include 'partials/_sidebar_product.html' %}
 		</div>
@@ -54,29 +69,33 @@
 			<div class="row row-cols-1 row-cols-md-2 g-3">
 				{% for product in products %}
 					<div class="col">
-						<div class="card border-dark h-100">
-							<a href={{product.get_absolute_url}}>
-							<img src="{{ product.thumbnail.url }}" height="300px" class="card-img-top" alt="Cant Load Image"></img></a>
-							<div class="card-body">
-								<h5 class="card-title">{{product.name}}</h5>
-								<h6 class="card-title">{{product.category.category_name}}</h6>
-								<!-- Company: {{product.company.company_name}} -->
-								<p class="card-text">{{product.description | truncatechars:100 }}</p>
-								<h6 class="card-title">Price: ₹{{product.price}}</h6>
-								<br/>
-								<a class="btn btn-success" style="margin-right: 15%;margin-left: 7%" href={{product.get_absolute_url}} >View More</a>
-								<button data-product="{{ product.id }}" data-action="add" class="btn btn-primary update-cart" Z style="margin-left: 15%;margin-right: 7%" >Add to Cart</button>
-								<div>
-									<label for="select">Qty</label>
-									<select id="select" class="h6 store-select-dropdown">
-									  <option value="1">1</option>
-									  <option value="2">2</option>
-									  <option value="3">3</option>
-									  <option value="4">4</option>
-									</select>
-								  </div>
-							</div> 
-						</div>
+						<div class="card border-light  h-100"> <!--  border-light -->
+						<div class="product-card">
+							<div class="product-tumb">
+								<a href={{product.get_absolute_url}}>
+									<img src="{{ product.thumbnail.url }}" style=" height: 300px; width: 380px;" class="card-img-top" alt="Cant Load Image"></img></a>
+							</div>
+							<div class="product-details">
+								<span class="product-catagory">{{product.category.category_name}}</span>
+								<h4><a href="{{product.get_absolute_url}}">{{product.name}}</a></h4>
+								<p>{{product.description | truncatechars:100 }}</p>
+								<div class="product-bottom-details">
+									<div class="product-price">₹{{product.price}}</div>
+									<div class="product-links">
+										<a href="">
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+												<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+											  </svg>
+										</a>
+										<a href="{{ product.id }}">
+											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+												<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+											  </svg>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div></div>
 					</div>
 				{% endfor %}
 			</div>
