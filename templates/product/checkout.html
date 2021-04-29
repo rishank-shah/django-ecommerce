@@ -10,6 +10,10 @@
         margin-bottom: 10px;
         border-bottom: 1px solid #ececec;
     }
+
+    .hidden{
+	display: none!important;
+    }
 </style>
     <div class="container">
         <div class="row">
@@ -18,6 +22,33 @@
                     <a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
                     <br>
                     <br>
+                    {% if not request.user.is_authenticated %}
+                    <div class="p-4">
+                        <input type="text" name="username" id="username" placeholder="Username">
+                        <input type="text" name="email" id="email" placeholder="Email">
+                        <div class="btn btn-block" id="process_order"><a href="{% url 'login' %}">Login</a></div>
+                        <div class="btn btn-block" id="process_order"><a href="{% url 'register' %}">Register</a></div>
+                    </div>
+                    {% elif email_verified %}
+                    <div>
+                        <h3>Select an address</h3>
+                        <!-- dropdown menu to select addresses -->
+                        <select id="address-select" class="h6 store-select-dropdown">
+                        {% for add in useraddress %}
+                            <option value="{{ add.id }}">{{ add.address }}, {{ add.city }}-{{ add.zipcode }}, {{add.state}}.</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <br><br>
+                    <div class="box-element" id="payment-info">
+                        <label for="process_order"><strong>Paypal Option</strong></label>
+                        <!-- <a name="process_order" id="process_order" href="#" class="btn btn-success btn-block">Make payment</a> -->
+                    </div>
+                    <div id="paypal-button-container"></div>
+                    {% else %}
+                    <h3>Please verify and then proceed!</h3>
+                    <a class='btn btn-dark rounded-pill py-2 btn-block' href="{% url 'all_products' %}">&#x2190;   Continue Shopping</a>
+                    {% endif %}
                     <hr>
                     <h3>Order Summary</h3>
                     <hr>
@@ -25,76 +56,116 @@
                     <div style="display: flex;" class="cart-row">
                         <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
                         <div style="flex:2"><p>{{item.product.name}}</p></div>
-                        <div style="flex:1"><p>₹{{item.product.price}}</p></div>
+                        <div style="flex:1"><p>${{ item.product.price }}</p></div>
                         <div style="flex:1"><p>x{{item.quantity}}</p></div>
                     </div>
                     {% endfor %}
                     <h5>Items:   {{order.get_cart_items}}</h5>
-                    <h5 value="{{ order.get_cart_total }}">Total:   ₹{{order.get_cart_total}}</h5>
+                    <h5 value="{{ order.get_cart_total }}">Total:   ${{ order.get_cart_total|floatformat:2 }}</h5>
                 </div>
             </div>
-
-            <div>
-                <h3>Select an address</h3>
-                <!-- dropdown menu to select addresses -->
-                <select id="address-select" class="h6 store-select-dropdown">
-                {% for add in useraddress %}
-                    <option value="{{ add.id }}">{{ add.address }}, {{ add.city }}-{{ add.zipcode }}, {{add.state}}.</option>
-                {% endfor %}
-                </select>
-            </div>
-
+            
+            
             <br>
-            <div class="box-element hidden" id="payment-info">
-                <label for="process_order"><strong>Paypal Option</strong></label>
-                <a name="process_order" id="process_order" href="#" class="btn btn-success btn-block">Make payment</a>
-            </div>
-    
+            
         </div>
-    
+        
     </div>
+    
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    
+<script>
+    var total = '{{order.get_cart_total}}'
+        // Render the PayPal button into #paypal-button-container
+    paypal.Buttons({
+        style: {
+            color:  'black',
+            shape:  'pill',
+            label:  'pay',
+            height: 40
+        },
 
-    <script>
-        var total = '{{order.get_cart_total}}'
-        var select_address = document.getElementById("address-select").options;
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: parseFloat(total).toFixed(2)
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Show a success message to the buyer
+                // alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                submitFormData()
+
+                
+            });
+        }
+
+
+    }).render('#paypal-button-container');
+</script>
+
+<script>
+    
+    // document.getElementById('process_order').addEventListener('click', function(e){
+    //     submitFormData()
+    // })
+    
+    function submitFormData(){
+        console.log('Payment Button clicked')
         
-        
-        document.getElementById('process_order').addEventListener('click', function(e){
-            submitFormData()
-        })
-        
-        function submitFormData(){
-            console.log('Payment Button clicked')
+        if (user != 'AnonymousUser'){
+            var select_address = document.getElementById("address-select").options;
             var selected_address = document.getElementById("address-select").selectedIndex;
             var address_id = (select_address[selected_address].value)
-            
+
             var orderInfo = {
                 'id':address_id,
                 'total':total,
             }
-
-            var url = '/cart/process_order/'
-            fetch(url, {
-                method:'POST',
-                headers:{
-                    'content-Type':'application/json',
-                    'X-CSRFToken':csrftoken,
-                },
-                body:JSON.stringify({'orderInfo':orderInfo})
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Success: ', data);
-                alert('Transaction completed');
-
-                cart = {}
-                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-
-                window.location.href = "{% url 'all_products' %}"
-            })
-
+            
         }
-    </script>
+        
+        if (user == 'AnonymousUser'){
+            
+            var email = document.getElementById("email").value;
+            var username = document.getElementById("username").value;
+            
+            var orderInfo = {
+                'username':username,
+                'email':email,
+                'total':total,
+            }
+            
+        }
+        var url = '/cart/process_order/'
+        fetch(url, {
+            method:'POST',
+            headers:{
+                'content-Type':'application/json',
+                'X-CSRFToken':csrftoken,
+            },
+            body:JSON.stringify({'orderInfo':orderInfo})
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success: ', data);
+            alert('Transaction completed');
+
+            cart = {}
+            document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+            window.location.href = "{% url 'all_products' %}"
+        })
+
+    }
+</script>
 
 
 

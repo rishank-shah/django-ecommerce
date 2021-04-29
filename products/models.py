@@ -87,7 +87,10 @@ class Product(models.Model):
         upload_to=product_thumbnail_directory_path,
         blank=True
     )
-    price = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(
+        decimal_places = 2,
+        max_digits=10,
+        default=0)
     company = models.ForeignKey(
         to = Company,
         on_delete = models.CASCADE,

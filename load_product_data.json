@@ -107,7 +107,7 @@
         "category": 1,
         "description": "Our thinnest, lightest notebook, completely transformed by the Apple M1 chip. CPU speeds up to 3.5x faster. GPU speeds up to 5x faster. Our most advanced Neural Engine for up to 9x faster machine learning. The longest battery life ever in a MacBook Air. And a silent, fanless design. This much power has never been this ready to go.",
         "thumbnail": "media/product_thumbnail/apple-macbook-air/Apple-MGND3HNA-Laptops-491946465-i-6-1200Wx1200H_bg9ivo",
-        "price": 100000,
+        "price": 1599.00,
         "company": 4,
         "is_draft": false,
         "created_at": "2021-04-12T03:32:20.340Z"
@@ -122,7 +122,7 @@
         "category": 1,
         "description": "AMD 3rd Generation Ryzen 9. 14\" Full HD display with 120Hz refresh rate.16GB system memory for intense multitasking and gaming. Solid State Drive 1 TB.NVIDIA GeForce RTX 2060",
         "thumbnail": "media/product_thumbnail/asus-rog-zephyrus-g14/G14_Black_and_White_0_b3sglp",
-        "price": 90000,
+        "price": 1329.97,
         "company": 3,
         "is_draft": false,
         "created_at": "2021-04-12T03:32:20.340Z"
@@ -137,7 +137,7 @@
         "category": 4,
         "description": "Ultra-compact, sturdy tenkeyless keyboard. Full aluminum body for extra rigidity and stability. Features the new HyperX mechanical switches. Three adjustable keyboard angles. RGB back-light keyboard",
         "thumbnail": "media/product_thumbnail/hyperx-alloy-origins-core/HyperX-Alloy-Orgins-Core-TKL-5-160x160_jpmko8",
-        "price": 10000,
+        "price": 89.99,
         "company": 5,
         "is_draft": false,
         "created_at": "2021-04-12T03:32:20.340Z"
@@ -152,7 +152,7 @@
         "category": 4,
         "description": "Mechanical keyboard with hot-swappable Gateron optical key switches. ABS bottom shell with double-color ABS keycap.RGB backlit keyboard. Customization available both on-board & via software. Ergonomic keyboard design to offer the most comfortable gaming and work experience. Detachable USB Type-C cable. Supports 3-layer programmable download mode and powerful game macros. One year domestic warranty.",
         "thumbnail": "media/product_thumbnail/sk61-rgb/GK61-black-2-min-160x160_de7jeh",
-        "price": 5000,
+        "price": 69.00,
         "company": 6,
         "is_draft": false,
         "created_at": "2021-04-12T03:32:20.340Z"
@@ -167,7 +167,7 @@
         "category": 2,
         "description": "Enjoy ultra-fast multitasking on your desktop tower with an AMD Athlon mobile processor. Get incredible responsiveness when running multiple applications, watching movies, chatting with friends, or getting your work done with a PC that keeps up with you. No need to worry about storage space with the IdeaCentre 3 you can store plenty of photos, music, and other files on its 256GB solid state drive on this desktop PC Connect all the peripherals you need you have six USB 2.0 ports to choose from, plus two USB 3.1 ports, a 7-in-1 card reader, and an HDMI port for all your connections The 7-liter IdeaCentre 3 will fit just about anywhere in your home, measuring only 11.26\" x 10.63\" x 7.87\". Its contemporary silver finish is highlighted with a stylish wavy line design for an appealing, trendy look This Windows 10 desktop comes with a Bluetooth 4.0 Combo with Wi-Fi Card (2x2 Wi-Fi 802.11 AC)",
         "thumbnail": "media/product_thumbnail/lenovo-ideacentre-3-desktop/21GZAkI0uL._AC_US40__sc6ags",
-        "price": 50000,
+        "price": 319.96,
         "company": 7,
         "is_draft": false,
         "created_at": "2021-04-12T03:32:20.340Z"

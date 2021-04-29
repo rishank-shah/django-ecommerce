@@ -1,4 +1,5 @@
-from products.cart import cartData, cookieCart
+from django.views.decorators.csrf import csrf_exempt
+from products.cart import cartData, cookieCart, guest_user_cart
 from authapp.models import User, UserAddress
 import json
 import datetime
@@ -123,6 +124,7 @@ def update_item(request):
     return JsonResponse('Item was added', safe=False)
 
 
+@csrf_exempt
 def process_order(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
@@ -130,11 +132,11 @@ def process_order(request):
     if request.user.is_authenticated:
         user = request.user
         order, created = Order.objects.get_or_create(user=user, completed=False)
-        total = int(data['orderInfo']['total'])
+        total = float(data['orderInfo']['total'])
         order.transaction_id = transaction_id
         order.shipping_address = UserAddress.objects.get(id=data['orderInfo']['id'])
 
-        if total == order.get_cart_total:
+        if total == float(order.get_cart_total):
             order.completed = True
         order.save()
     
@@ -158,25 +160,37 @@ def checkout(request):
             'order':order,
             'cartItems':cartItems
         }
-        messages.error(request, "Please login and verify your email to checkout.")
-        return render(request, 'product/cart.html',context)
+        return render(request, 'product/checkout.html',context)
 
-    elif not request.user.email_verified:
-        useraddress = data['useraddress']
-        context = {
-            'useraddress':useraddress,
-            'orderitems':orderitems,
-            'order':order,
-            'cartItems':cartItems
-        }
-        messages.error(request, "Please verify your email before proceeding.")
-        return render(request, 'product/cart.html',context)
-    
+    email_verified = request.user.email_verified
     useraddress = data['useraddress']
     context = {
+        'email_verified':email_verified,
         'useraddress':useraddress,
         'orderitems':orderitems,
         'order':order,
         'cartItems':cartItems
     }
     return render(request, 'product/checkout.html',context)
+
+
+def cart_register(request):
+    username = request.POST.get('inputName')
+    email = request.POST.get('inputEmail')
+
+    context = {
+        'username':username,
+        'email':email
+    }
+    return render(request, 'authapp/register.html',context)
+
+
+def cart_login(request):
+    username = request.POST.get('inputName')
+    email = request.POST.get('inputEmail')
+
+    context = {
+        'username':username,
+        'email':email
+    }
+    return render(request, 'authapp/login.html',context)

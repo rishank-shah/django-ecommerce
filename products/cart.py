@@ -74,15 +74,15 @@ def cartData(request):
 
 
 def guest_user_cart(request, data):
-
-    #  to call this, define data=json.loads(request.body)
-    # then customer, order = guestOrder(request, data)
+    # to use this in views
+    # data=json.loads(request.body)
+    # customer, order = guest_user_cart(request, data)
 
     print('User is not logged in!')
     print('COOKIES:', request.COOKIES)
 
-    username = data['emailInfo']['username']
-    email = data['emailInfo']['email']
+    username = data['orderInfo']['username']
+    email = data['orderInfo']['email']
 
     cookieData = cookieCart(request)
     orderitems = cookieData['orderitems']
@@ -94,9 +94,9 @@ def guest_user_cart(request, data):
     user.username = username
     user.save()
 
-    order = Order.objects.create(
+    order = Order.objects.update_or_create(
         user=user,
-        complete=False,
+        completed=False,
     )
 
     for item in orderitems:

@@ -44,14 +44,14 @@
                       <div class="p-2">
                         <img src="https://www.zotac.com/download/files/styles/w1024/public/product_gallery/graphics_cards/zt-a30800d-10p-image01_0.jpg?itok=YKGgElPU" alt="" width="70" class="img-fluid rounded shadow-sm">
                         <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: Graphics Card</span>
+                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category_name }}</span>
                         </div>
                       </div>
                     </th>
-                    <td class="border-0 align-middle"><strong>₹{{ item.product.price }}</strong></td>
+                    <td class="border-0 align-middle"><strong>${{ item.product.price }}</strong></td>
                     <td class="border-0 align-middle">
-                      <div style="flex:1" class="update-quantity">
-                        <button style="border:none; background-color: inherit; flex: 0;" data-product="{{ item.product.id }}" data-action="add" class="update-cart">
+                      <div style="display: flex;" class="update-quantity">
+                        <button style="border:none; background-color: inherit; padding:10px;" data-product="{{ item.product.id }}" data-action="add" class="update-cart">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
                                 <g id="Group_1" data-name="Group 1" transform="translate(-354 -226)">
                                   <line id="Line_1" data-name="Line 1" x2="10" transform="translate(354.5 231.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
@@ -59,15 +59,15 @@
                                 </g>
                             </svg>
                         </button>
-                        <p style="flex: 0;">&nbsp;&nbsp;{{ item.quantity }}&nbsp;&nbsp;</p>
-                        <button style="border:none; background-color: inherit; flex: 0;" data-product="{{ item.product.id }}" data-action="remove" class="update-cart">
+                        <p style="transform: translateY(7px);">&nbsp;&nbsp;{{ item.quantity }}&nbsp;&nbsp;</p>
+                        <button style="border:none; background-color:inherit ; padding:10px;" data-product="{{ item.product.id }}" data-action="remove" class="update-cart">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="1" viewBox="0 0 11 1">
                                 <line id="Line_3" data-name="Line 3" x2="10" transform="translate(0.5 0.5)" fill="none" stroke="#000" stroke-linecap="round" stroke-width="1"/>
                             </svg>
                         </button>
                       </div>
                     </td>
-                    <td class="border-0 align-middle"><strong>₹{{ item.get_total }}</strong></td>
+                    <td class="border-0 align-middle"><strong>${{ item.get_total }}</strong></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -78,24 +78,12 @@
         </div>
   
         <div class="row py-5 p-4 bg-white rounded shadow-sm">
-          {% if not request.user.is_authenticated %}
+          
           <div class="col-lg-6">
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Log In</div>
-            <div class="p-4">
-              <label for="inputName" class="font-italic mb-4">Username:</p>
-              <div class="input-group mb-4 border rounded-pill p-2">
-                <input type="username" placeholder="Enter Name" aria-describedby="button-addon3" class="form-control border-0" id = "inputName" required>
-              </div>
-              <label for = "inputEmail" class="font-italic mb-4">Email address:</p>
-              <div class="input-group mb-4 border rounded-pill p-2">
-                <input type="email" id = "inputEmail" placeholder="Enter Name" aria-describedby="button-addon3" class="form-control border-0" required>
-              </div>
-            </div>
-            {% endif %}
             <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
             <div class="p-4">
               <p class="font-italic mb-4">If you have some information for the seller you can leave them in the box below</p>
-              <textarea name="" cols="30" rows="2" class="form-control"></textarea>
+              <textarea name="instructions" cols="30" rows="2" class="form-control"></textarea>
             </div>
           </div>
           <div class="col-lg-6" style = "margin: auto" >
@@ -103,11 +91,11 @@
             <div class="p-4">
               <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
               <ul class="list-unstyled mb-4">
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>₹{{ order.get_cart_total }}</strong></li>
-                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$10.00</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>${{ order.get_cart_total }}</strong></li>
+                <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$0.00</strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
                 <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
-                  <h5 class="font-weight-bold">$400.00</h5>
+                  <h5 class="font-weight-bold">${{ order.get_cart_total|floatformat:2 }}</h5>
                 </li>
               </ul><a id = "checkout" href="{% url 'checkout' %}" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
             </div>
@@ -118,39 +106,7 @@
     </div>
   </div>
 </div>
-<script>
-  var email = document.getElementById("inputEmail").value;
-  var username = document.getElementById("inputName").value;
-  
-  document.getElementById('checkout').addEventListener('click', function(e){
-      userFormData()
-  })
-  
-  function userFormData(){
 
-      userInfo = {
-          'username':username,
-          'email':email,
-      }
-
-  var url = '/cart/checkout.html/'
-
-  fetch(url, {
-      method:'POST',
-      headers:{
-          'content-Type':'application/json',
-          'X-CSRFToken':csrftoken,
-      },
-      body:JSON.stringify({'userInfo':userInfo})
-  })
-  .then((response) => response.json())
-  .then((data) => {
-      console.log('Success: ', data);
-  })
-
-}
-
-</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
