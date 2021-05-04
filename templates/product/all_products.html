@@ -12,7 +12,7 @@
 	</div>
 	{% if json %}
 		<center>
-			<h1 style="font-family:'Rockwell'">
+			<h1 style="font-family:'Rockwell'; color: #dbf8ff;">
 				{% if count == 1 %}
 					Found 1 product
 				{% else %}
@@ -28,15 +28,15 @@
 				<div class="row row-cols-1 row-cols-md-2 g-3">
 					{% for product in products %}
 					<div class="col">
-						<div class="card border-light  h-100"> <!--  border-light -->
-						<div class="product-card">
+						
+						<div class="product-card" class="rounded-3">
 							<div class="product-tumb">
 								<a href="/product/{{ product.slug }}">
 									<img src="{{ product.thumbnail }}" style=" height: 300px; width: 380px;" class="card-img-top" alt="Cant Load Image"></img></a>
 							</div>
-							<div class="product-details">
+							<div class="product-details" style="background-color: #dbf8ff;">
 								<span class="product-catagory">{{product.category.category_name}}</span>
-								<h4><a href="/product/{{ product.slug }}">{{product.name}}</a></h4>
+								<h4><a href="/product/{{ product.slug }}">{{product.name | truncatechars:23 }}</a></h4>
 								<p>{{product.description | truncatechars:100 }}</p>
 								<div class="product-bottom-details">
 									<div class="product-price">${{product.price|floatformat:2}}</div>
@@ -46,15 +46,15 @@
 												<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
 											  </svg>
 										</a>
-										<button data-product="{{ product.id }}" data-action="add" class="update-cart" >
-											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+										<button style="background: none; color: #e1e1e1; border: none;"><a href="">
+											<svg data-product="{{ product.id }}" data-action="add" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-fill update-cart" viewBox="0 0 16 16">
 												<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-											  </svg>
-											</button>
+											</svg></a>
+										</button>
 									</div>
 								</div>
 							</div>
-						</div></div>
+						</div>
 					</div>
 					{% endfor %}
 				</div>
@@ -69,15 +69,15 @@
 			<div class="row row-cols-1 row-cols-md-2 g-3">
 				{% for product in products %}
 					<div class="col">
-						<div class="card border-light  h-100"> <!--  border-light -->
-						<div class="product-card">
+						<!-- div class="card border-light  h-100"> <!--  border-light -->
+						<div class="product-card" class="rounded-3">
 							<div class="product-tumb">
 								<a href={{product.get_absolute_url}}>
 									<img src="{{ product.thumbnail.url }}" style=" height: 300px; width: 380px;" class="card-img-top" alt="Cant Load Image"></img></a>
 							</div>
-							<div class="product-details">
+							<div class="product-details" style="background-color: #181926;">
 								<span class="product-catagory">{{product.category.category_name}}</span>
-								<h4><a href="{{product.get_absolute_url}}">{{product.name}}</a></h4>
+								<h4><a href="{{product.get_absolute_url}}">{{product.name | truncatechars:23 }}</a></h4>
 								<p>{{product.description | truncatechars:100 }}</p>
 								<div class="product-bottom-details">
 									<div class="product-price">${{product.price|floatformat:2}}</div>
@@ -87,15 +87,15 @@
 												<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
 											  </svg>
 										</a>
-										<button style="background: none; color: #e1e1e1; border: none;">
+										<button style="background: none; color: #e1e1e1; border: none;"><a href="">
 											<svg data-product="{{ product.id }}" data-action="add" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart-fill update-cart" viewBox="0 0 16 16">
 												<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-											</svg>
+											</svg></a>
 										</button>
 									</div>
 								</div>
 							</div>
-						</div></div>
+						</div><!--/div -->
 					</div>
 				{% endfor %}
 			</div>

@@ -31,6 +31,7 @@ def cookieCart(request):
                 'name':product.name,
                 'price':product.price,
                 'thumbnail':product.thumbnail,
+                'category' :product.category,
             },
             'quantity':cart[i]['quantity'],
             'get_total':total,

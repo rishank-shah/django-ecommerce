@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="cart.css" rel="stylesheet">
 {% extends 'product/base.html' %}
 {% load static %}
 {% block body %}  
 {% include "partials/_messages.html" %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="{% static 'css/cart.css' %}" rel="stylesheet">  
+
 <div id = "wave"> 
     <div class="px-4 px-lg-0">
     <div class="container text-white py-5 text-center">
@@ -42,9 +43,10 @@
                   <tr>
                     <th scope="row" class="border-0">
                       <div class="p-2">
-                        <img src="https://www.zotac.com/download/files/styles/w1024/public/product_gallery/graphics_cards/zt-a30800d-10p-image01_0.jpg?itok=YKGgElPU" alt="" width="70" class="img-fluid rounded shadow-sm">
+                        <img src="{{ item.product.thumbnail.url }}" alt="" width="70" class="img-fluid rounded shadow-sm">
                         <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category_name }}</span>
+                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5>
+                          <span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category }}</span>
                         </div>
                       </div>
                     </th>

@@ -66,6 +66,7 @@ def all_products(request):
 
 def product_detail(request,slug):
     try:
+        products=Product.objects.all()[:4]
         product = Product.objects.get(
             slug = slug,
             is_draft = False
@@ -75,7 +76,8 @@ def product_detail(request,slug):
 
         return render(request,'product/product_detail.html',{
             'product':product,
-            'cartItems':cartItems
+            'cartItems':cartItems,
+            'products' :products
         })
 
     except Product.DoesNotExist:

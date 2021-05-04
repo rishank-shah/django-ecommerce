@@ -1,1 +1,1 @@
-@keyframes mygradient{0%{background-position:0}100%{background-position:100%}}body{margin:0;background:linear-gradient(90deg,#f57f17,#e91e63,#9c27b0,#3f51b5);background-size:600% 100%;background-repeat:no-repeat;animation:mygradient 24s linear infinite alternate}
+@keyframes mygradient{0%{background-position:0}100%{background-position:100%}}body{margin:0;background:linear-gradient(90deg,#283749,#546acc,#8690b9,#1228a5);background-size:600% 100%;background-repeat:no-repeat;animation:mygradient 12s linear infinite alternate}

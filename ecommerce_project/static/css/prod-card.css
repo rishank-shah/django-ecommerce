@@ -20,7 +20,7 @@ a
     width: 380px;
     position: relative;
     box-shadow: 0 2px 7px #dfdfdf;
-    margin: 50px auto;
+    margin: 5px auto;
     background: #fafafa;
 }
 
@@ -57,13 +57,13 @@ a
     display: block;
     margin-bottom: 18px;
     text-transform: uppercase;
-    color: #363636;
+    color: #a6a6a6 ;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .product-details h4 a:hover {
-    color: #fbb72c;
+    color: #a6a6a646 ;
 }
 
 .product-details p {
@@ -86,7 +86,7 @@ a
 
 .product-price {
     font-size: 18px;
-    color: #fbb72c;
+    color: #a6a6a6 ;
     font-weight: 600;
 }
 
@@ -105,11 +105,11 @@ a
 .product-links a {
     display: inline-block;
     margin-left: 5px;
-    color: #e1e1e1;
+    color: #a6a6a6 ;
     transition: 0.3s;
     font-size: 17px;
 }
 
 .product-links a:hover {
-    color: #fbb72c;
+    color: #5b5b5c;
 }
