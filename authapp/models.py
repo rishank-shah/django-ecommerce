@@ -36,6 +36,10 @@ class UserAddress(models.Model):
         max_length=100,
         null=False
     )
+    country = models.CharField(
+        max_length=100,
+        null=False
+    )
     zipcode = models.CharField(
         max_length=6,
         null=False

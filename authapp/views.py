@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views import View
-from .models import User
+from .models import User, UserAddress
 from django.contrib import messages
 from django.contrib import auth
 from django.utils.encoding import force_text
@@ -129,3 +129,64 @@ class Verification(View):
 		except Exception as e:
 			raise e
 		return redirect('login')
+
+
+def profile_details(request):
+
+    if request.method == 'POST':
+        username = request.user
+        new_first_name = request.POST.get('first_name')
+        new_last_name = request.POST.get('last_name')
+
+        if User.objects.filter(username=username).exists():
+            username.first_name = new_first_name,
+            username.last_name = new_last_name
+            username.save()
+            messages.success(request,"Details updated successfully!")
+            return render(request,'profile/profile_details.html')
+            
+        else:
+            messages.error(request,"Something went wrong!")
+            return render(request,'profile/profile_details.html')
+
+    return render(request,'profile/profile_details.html')
+
+
+def billing_details(request):
+    return render(request,'profile/billing_details.html')
+
+
+def shipping_details(request):
+    if request.method == 'POST':
+        username = request.user
+        new_address = request.POST.get('flat_no') + request.POST.get('building_no') + request.POST.get('area')
+        new_city = request.POST.get('city')
+        new_state = request.POST.get('state')
+        new_country = request.POST.get('country')
+        new_zip_code = request.POST.get('zip_code')
+
+
+        if User.objects.filter(username=username).exists():
+            user_address = UserAddress.objects.create(user=username)
+            user_address.address = new_address
+            user_address.city = new_city
+            user_address.state = new_state
+            user_address.country = new_country
+            user_address.zipcode = new_zip_code
+            user_address.save()
+            messages.success(request,"Address added successfully!")
+            return render(request,'profile/profile_details.html')
+            
+        else:
+            messages.error(request,"Something went wrong!")
+            return render(request,'profile/profile_details.html')
+
+    return render(request,'profile/shipping_detail.html')
+
+
+def wishlist(request):
+    return render(request,'profile/wishlist.html')
+
+
+def change_email_pref(requst):
+    pass

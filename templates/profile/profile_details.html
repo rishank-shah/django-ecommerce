@@ -1,28 +1,30 @@
 {% extends 'profile/base.html' %}
 {% load static %}
 {% block body %}  
+{% include "partials/_messages.html" %}
 
 <div class="container-fluid">
 	<div class="card">
 		<div class="card-header">
 			<div class="row align-items-center"><div class="col-8"><h3 class="mb-0">Profile Details</h3></div></div></div>
             <div class="card-body">
-              <form>
+              <form method="POST" action="{% url 'profile_details' %}">
+                {% csrf_token %}
                 <div class="row mt-2 mb-3"><div class="col-md-5"><h6 class="heading-small text-muted ">User Information</h6></div><div class="col-md-5"></div><div class="col-md-2"><button type="submit" class="text-right btn btn-sm btn-primary">Update</button></div></div>
                 <div class="pl-lg-4">
-					<div class="text-center mb-3">
-                     
-            <!--   import from expense tracker
-                        -->
-                     
-        
-                     
-					</div>            
-				<div class="row mt-2">
-					<div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-first-name">First name</label>
+                  <div class="text-center mb-3">
+                            
+                    <!--   import from expense tracker
+                                -->
+                            
+                
+                            
+                  </div>            
+				          <div class="row mt-2">
+					            <div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-first-name">First name</label>
                         <input type="text" id="input-first-name" name="first_name" value=""   class="form-control" placeholder="First name" ></div></div>
                       
-                    <div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-last-name">Last name</label>
+                      <div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-last-name">Last name</label>
                         <input type="text" id="input-last-name" name="last_name" value="" class="form-control" placeholder="Last name" ></div></div>
 						
                   </div>

@@ -9,6 +9,7 @@ from django.core.mail import EmailMessage
 from .tasks import auth_email_task
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.core.mail import send_mail
 
 class AppTokenGenerator(PasswordResetTokenGenerator):
 
@@ -44,15 +45,27 @@ def email_register(request,user,email_to):
         'extra_info':extra_info,
     })
     text_content = strip_tags(html_content)
-    auth_email_task.delay(email_subject, text_content, fromEmail,email_to,html_content)
+    # auth_email_task.delay(email_subject, text_content, fromEmail,email_to,html_content)
+    EmailThread(email_subject, text_content, fromEmail,email_to,html_content).start()
 
 class EmailThread(threading.Thread):
-	def __init__(self,email):
-		self.email = email
-		threading.Thread.__init__(self)
 
-	def run(self):
-		self.email.send(fail_silently = False)
+    def __init__(self,email_subject, text_content, fromEmail,to,html_content):
+        self.email_subject = email_subject
+        self.text_content = text_content
+        self.fromEmail = fromEmail
+        self.receiver = to
+        self.html_content = html_content
+        threading.Thread.__init__(self)
 
+    def run(self):
+        send_mail(
+            self.email_subject,
+            self.text_content,
+            self.fromEmail,
+            [self.receiver],
+            html_message = self.html_content
+        )
+        
 def user_profile_pic_directory_path(instance, filename):
     return 'user_profile_pic/{0}/{1}'.format(instance.username ,filename)

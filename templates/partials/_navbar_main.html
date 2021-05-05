@@ -24,7 +24,7 @@
 						{{ request.user.username }}
 					  </a>
 					  <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-						<li><a href="" class="dropdown-item" name="Profile">Profile</a></li>
+						<li><a href="{% url 'profile_details' %}" class="dropdown-item" name="Profile">Profile</a></li>
 						<li><a class="dropdown-item" name="Settings">Settings</a></li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item" onclick="document.getElementById('formnew').submit()" name="Logout">Logout</a></li>

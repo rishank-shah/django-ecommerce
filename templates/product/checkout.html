@@ -41,7 +41,7 @@
                             <tr>
                               <th scope="row" class="border-0">
                                 <div class="p-2">
-                                  <img src="https://www.zotac.com/download/files/styles/w1024/public/product_gallery/graphics_cards/zt-a30800d-10p-image01_0.jpg?itok=YKGgElPU" alt="" width="70" class="img-fluid rounded shadow-sm">
+                                  <img src="{{item.product.thumbnail.url}}" alt="" width="70" class="img-fluid rounded shadow-sm">
                                   <div class="ml-3 d-inline-block align-middle">
                                     <h5 class="mb-0"> <a href="#" class="text-light d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category_name }}</span>
                                   </div>
@@ -85,8 +85,9 @@
                       <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold" style= "font-size: 18">Pay with PayPal</div>
                       <br><br>
                         <!-- <a name="process_order" id="process_order" href="#" class="btn btn-success btn-block">Make payment</a> -->
-                    
-                    <div style="display: block; margin: 0 auto;"><div id="paypal-button-container" ></div></div>
+                        <div style="display: block; margin: 0 auto;"><div id="paypal-button-container" ></div>
+                        <a type="submit" href="{% url 'all_products' %}" id="confirm_order" class="highlight-button btn btn-medium button btn-success" >Confirm Order</a>
+                    </div>
                     </div>
                     {% else %}
                     <div class = "box">
@@ -105,7 +106,7 @@
         // Render the PayPal button into #paypal-button-container
     paypal.Buttons({
         style: {
-            color:  'black',
+            color:  'white',
             shape:  'pill',
             label:  'pay',
             height: 40
@@ -185,12 +186,21 @@
             cart = {}
             document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
 
-            window.location.href = "{% url 'all_products' %}"
+            window.location.href = "{% url 'checkout' %}"
         })
 
     }
 </script>
 
+<script>
+    var cnfrmBtn = document.getElementsById('confirm_order')
+
+    cnfrmBtn.addEventListener('click',function(){
+        console.log("Order Confirmed!")
+        window.location.href = "{% url 'all_products' %}"
+    })
+
+</script>
 
 
 {% endblock %}

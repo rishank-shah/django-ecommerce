@@ -17,14 +17,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
-from products.views import all_products
+from products.views import all_products, price_filter
 from products import views
 
 
 urlpatterns = [
     path('',all_products,name="all_products"),
+    path('price_filter/',price_filter,name="price_filter"),
     path('admin/', admin.site.urls),
     path('authentication/', include('authapp.urls')),
+    path('profile/', include('authapp.profile_urls')),
     path('product/',include('products.urls')),
     path('cart/',include('products.cart_urls')),
 ]
