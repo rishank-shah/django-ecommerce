@@ -2,78 +2,104 @@
 {% load static %}
 {% block body %}  
 {% include "partials/_messages.html" %}
-<style>
-    .cart-row{
-        display: flex;
-        align-items: flex-stretch;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ececec;
-    }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="{% static 'css/checkout.css' %}" rel="stylesheet">
 
-    .hidden{
-	display: none!important;
-    }
-</style>
-    <div class="container">
-        <div class="row">
-            <div class="jumbotron">
-                <div class="box-element">
-                    <a  class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-                    <br>
-                    <br>
+    <div class="px-4 px-lg-0">
+        <div class="container text-white py-5 text-center">
+          <h1 class="display-3">Checkout</h1>
+        </div> 
+        <div class="pb-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 p-5 rounded shadow-sm mb-5" style= "background: #191919;">
+                    <a class="btn btn-dark rounded-pill py-2 btn-block" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+                    <a class='btn btn-dark rounded-pill py-2 btn-block' href="{% url 'all_products' %}">&#x2190; Continue Shopping</a> 
+                    <br><br>
+                        <div class="table-responsive">
+                            <h1 class="display-6">Order Summary</h1>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col" class="border-0 bg-dark">
+                                <div class="p-2 px-3 text-uppercase text-light">Product</div>
+                              </th>
+                              <th scope="col" class="border-0 bg-dark">
+                                <div class="py-2 text-uppercase text-light">Price</div>
+                              </th>
+                              <th scope="col" class="border-0 bg-dark">
+                                <div class="py-2 text-uppercase text-light">Quantity</div>
+                              </th>
+                              <th scope="col" class="border-0 bg-dark">
+                                <div class="py-2 text-uppercase text-light">Total</div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for item in orderitems %}
+                            <tr>
+                              <th scope="row" class="border-0">
+                                <div class="p-2">
+                                  <img src="https://www.zotac.com/download/files/styles/w1024/public/product_gallery/graphics_cards/zt-a30800d-10p-image01_0.jpg?itok=YKGgElPU" alt="" width="70" class="img-fluid rounded shadow-sm">
+                                  <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0"> <a href="#" class="text-light d-inline-block align-middle">{{ item.product.name }}</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category_name }}</span>
+                                  </div>
+                                </div>
+                              </th>
+                              <td class="border-0 align-middle text-light"><strong>${{ item.product.price }}</strong></td>
+                              <td class="border-0 align-middle text-light">
+                                  <p class = "text-light" style="transform: translateY(7px);">&nbsp;&nbsp;{{ item.quantity }}&nbsp;&nbsp;</p>
+                              </td>
+                              <td class="border-0 align-middle text-light"><strong>${{ item.get_total }}</strong></td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                      <ul class="list-unstyled mb-4">
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>${{ order.get_cart_total }}</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping and handling</strong><strong>$0.00</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tax</strong><strong>$0.00</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                          <h5 class="font-weight-bold">${{ order.get_cart_total|floatformat:2 }}</h5>
+                        </li>
                     {% if not request.user.is_authenticated %}
-                    <div class="p-4">
-                        <input type="text" name="username" id="username" placeholder="Username">
-                        <input type="text" name="email" id="email" placeholder="Email">
-                        <div class="btn btn-block" id="process_order"><a href="{% url 'login' %}">Login</a></div>
-                        <div class="btn btn-block" id="process_order"><a href="{% url 'register' %}">Register</a></div>
-                    </div>
+                      <form onsubmit="event.preventDefault()" class="box">
+                        <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold" style= "font-size: 22">Login</div>
+                        <p class="text-muted"> Please enter your login and password!</p> <input type="text" name="" placeholder="Username"> <input type="password" name="" placeholder="Password"> <a class="forgot text-muted" href="#">Forgot password?</a> <input type="submit" name="" value="Login" href="#">
+                      </form>
                     {% elif email_verified %}
-                    <div>
-                        <h3>Select an address</h3>
+                    <div class = "box">
+                      <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold " style= "font-size: 18">Select your address</div>
+                      <br><br>
                         <!-- dropdown menu to select addresses -->
-                        <select id="address-select" class="h6 store-select-dropdown">
+                        <select id="address-select" class="btn btn-dark dropdown-toggle rounded-pill" style="max-width: 400px;">
                         {% for add in useraddress %}
                             <option value="{{ add.id }}">{{ add.address }}, {{ add.city }}-{{ add.zipcode }}, {{add.state}}.</option>
                         {% endfor %}
                         </select>
+                        
                     </div>
-                    <br><br>
-                    <div class="box-element" id="payment-info">
-                        <label for="process_order"><strong>Paypal Option</strong></label>
+                    <div class="box" id="payment-info">
+                      <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold" style= "font-size: 18">Pay with PayPal</div>
+                      <br><br>
                         <!-- <a name="process_order" id="process_order" href="#" class="btn btn-success btn-block">Make payment</a> -->
+                    
+                    <div style="display: block; margin: 0 auto;"><div id="paypal-button-container" ></div></div>
                     </div>
-                    <div id="paypal-button-container"></div>
                     {% else %}
+                    <div class = "box">
                     <h3>Please verify and then proceed!</h3>
                     <a class='btn btn-dark rounded-pill py-2 btn-block' href="{% url 'all_products' %}">&#x2190;   Continue Shopping</a>
+                    </div>
                     {% endif %}
                     <hr>
-                    <h3>Order Summary</h3>
-                    <hr>
-                    {% for item in orderitems %}
-                    <div style="display: flex;" class="cart-row">
-                        <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
-                        <div style="flex:2"><p>{{item.product.name}}</p></div>
-                        <div style="flex:1"><p>${{ item.product.price }}</p></div>
-                        <div style="flex:1"><p>x{{item.quantity}}</p></div>
-                    </div>
-                    {% endfor %}
-                    <h5>Items:   {{order.get_cart_items}}</h5>
-                    <h5 value="{{ order.get_cart_total }}">Total:   ${{ order.get_cart_total|floatformat:2 }}</h5>
-                </div>
-            </div>
-            
-            
-            <br>
-            
-        </div>
-        
+            </div>           
+        </div>  
     </div>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=AcqKrjwwYCFmvYUqwjFUiQo08sRTegAh9MNqUXtU1cgc_mcm2J7K4NCri6uH8DnJ7-7GOoUFtsl8vDOt&currency=USD"></script>
-    
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>   
 <script>
     var total = '{{order.get_cart_total}}'
         // Render the PayPal button into #paypal-button-container
@@ -111,12 +137,10 @@
     }).render('#paypal-button-container');
 </script>
 
-<script>
-    
+<script>  
     // document.getElementById('process_order').addEventListener('click', function(e){
     //     submitFormData()
-    // })
-    
+    // })    
     function submitFormData(){
         console.log('Payment Button clicked')
         
