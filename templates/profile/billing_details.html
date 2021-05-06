@@ -1,9 +1,9 @@
 {% extends 'profile/base.html' %}
 {% load static %}
 {% block body %}  
-
-<div class="container-fluid">
-          <div class="card">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<div class="container-fluid text-light">
+          <div class="card" style="background: #191919">
               <div class="card-header">
               <div class="row align-items-center"><div class="col-8"><h3 class="mb-0"><b>Payment Details</b></h3></div></div></div>
             <div class="card-body">
@@ -83,19 +83,19 @@
   <form class="form" autocomplete="off" novalidate>
     <fieldset>
       <label for="card-number">Card Number</label>
-      <input type="num" id="card-number" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
-      <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
+      <input type="num" id="card-number" class="input-cart-number bg-dark text-light rounded-pill" maxlength="4" />
+      <input type="num" id="card-number-1" class="input-cart-number bg-dark text-light rounded-pill" maxlength="4" />
+      <input type="num" id="card-number-2" class="input-cart-number bg-dark text-light rounded-pill" maxlength="4" />
+      <input type="num" id="card-number-3" class="input-cart-number bg-dark text-light rounded-pill" maxlength="4" />
     </fieldset>
     <fieldset>
       <label for="card-holder">Card holder</label>
-      <input type="text" id="card-holder" />
+      <input type="text" id="card-holder" class="bg-dark text-light rounded-pill" />
     </fieldset>
     <fieldset class="card-expire">
       <label for="expire-month">Expire date</label>
       <div class="select">
-        <select id="expire-month">
+        <select id="expire-month" class = "btn btn-dark dropdown-toggle rounded-pill">
           <option></option>
           <option>01</option>
           <option>02</option>
@@ -112,7 +112,7 @@
         </select>
       </div>
       <div class="select">
-        <select id="expire-year">
+        <select id="expire-year" class="btn btn-dark dropdown-toggle rounded-pill">
           <option></option>
           <option>2021</option>
           <option>2022</option>
@@ -129,9 +129,9 @@
     </fieldset>
     <fieldset class="fieldset-ccv">
       <label for="card-ccv">CCV</label>
-      <input type="text" id="card-ccv" maxlength="3" />
+      <input type="text" id="card-ccv" maxlength="3" class="bg-dark text-light rounded-pill"/>
     </fieldset>
-    <button class="btn"><i class="fa fa-lock"></i>  Update</button>
+    <button class="btn btn-dark"><i class="fa fa-lock"></i>  Update</button>
   </form>
 </div>
 </div></div>

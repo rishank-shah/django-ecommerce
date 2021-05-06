@@ -2,15 +2,16 @@
 {% load static %}
 {% block body %}  
 {% include "partials/_messages.html" %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 
 <div class="container-fluid">
-	<div class="card">
+	<div class="card text-light" style="background: #191919">
 		<div class="card-header">
 			<div class="row align-items-center"><div class="col-8"><h3 class="mb-0">Profile Details</h3></div></div></div>
             <div class="card-body">
               <form method="POST" action="{% url 'profile_details' %}">
                 {% csrf_token %}
-                <div class="row mt-2 mb-3"><div class="col-md-5"><h6 class="heading-small text-muted ">User Information</h6></div><div class="col-md-5"></div><div class="col-md-2"><button type="submit" class="text-right btn btn-sm btn-primary">Update</button></div></div>
+                <div class="row mt-2 mb-3"><div class="col-md-5"><h6 class="heading-small text-muted ">User Information</h6></div><div class="col-md-5"></div><div class="col-md-2"><button type="submit" class="text-right btn btn btn-dark btn-primary">Update</button></div></div>
                 <div class="pl-lg-4">
                   <div class="text-center mb-3">
                             
@@ -22,10 +23,10 @@
                   </div>            
 				          <div class="row mt-2">
 					            <div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-first-name">First name</label>
-                        <input type="text" id="input-first-name" name="first_name" value=""   class="form-control" placeholder="First name" ></div></div>
+                        <input type="text" id="input-first-name" name="first_name" value=""   class="form-control bg-dark text-light rounded-pill" placeholder="First name" ></div></div>
                       
                       <div class="col-lg-6"><div class="form-group"><label class="form-control-label" for="input-last-name">Last name</label>
-                        <input type="text" id="input-last-name" name="last_name" value="" class="form-control" placeholder="Last name" ></div></div>
+                        <input type="text" id="input-last-name" name="last_name" value="" class="form-control bg-dark text-light rounded-pill" placeholder="Last name" ></div></div>
 						
                   </div>
                 </div>
@@ -36,7 +37,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="form-control-label" for="input-email-address">Email Address</label> <div class="pl-lg-4"><div class="row">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" placeholder="Email" class="form-control bg-dark text-light rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div></div></div></div>
                 </form>
               </div>
