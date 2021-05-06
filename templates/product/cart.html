@@ -11,10 +11,10 @@
     <div class="container text-white py-5 text-center">
       <h1 class="display-4">Shopping Cart</h1>
     </div> 
-    <div class="pb-5">
+    <div class="pb-5 text-light">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+          <div class="col-lg-12 p-5 rounded shadow-sm mb-5" style="background: #191919">
   
             <!-- Shopping cart table -->
             <div class="table-responsive">
@@ -24,17 +24,17 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col" class="border-0 bg-light">
-                      <div class="p-2 px-3 text-uppercase">Product</div>
+                    <th scope="col" class="border-0 bg-dark">
+                      <div class="p-2 px-3 text-uppercase text-light">Product</div>
                     </th>
-                    <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Price</div>
+                    <th scope="col" class="border-0 bg-dark">
+                      <div class="py-2 text-uppercase text-light">Price</div>
                     </th>
-                    <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Quantity</div>
+                    <th scope="col" class="border-0 bg-dark">
+                      <div class="py-2 text-uppercase text-light">Quantity</div>
                     </th>
-                    <th scope="col" class="border-0 bg-light">
-                      <div class="py-2 text-uppercase">Total</div>
+                    <th scope="col" class="border-0 bg-dark">
+                      <div class="py-2 text-uppercase text-light">Total</div>
                     </th>
                   </tr>
                 </thead>
@@ -45,13 +45,13 @@
                       <div class="p-2">
                         <img src="{{ item.product.thumbnail.url }}" alt="" width="70" class="img-fluid rounded shadow-sm">
                         <div class="ml-3 d-inline-block align-middle">
-                          <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">{{ item.product.name }}</a></h5>
+                          <h5 class="mb-0"> <a href="#" class="text-light d-inline-block align-middle">{{ item.product.name }}</a></h5>
                           <span class="text-muted font-weight-normal font-italic d-block">Category: {{ item.product.category }}</span>
                         </div>
                       </div>
                     </th>
-                    <td class="border-0 align-middle"><strong>${{ item.product.price }}</strong></td>
-                    <td class="border-0 align-middle">
+                    <td class="border-0 align-middle text-light"><strong>${{ item.product.price }}</strong></td>
+                    <td class="border-0 align-middle text-light">
                       <div style="display: flex;" class="update-quantity">
                         <button style="border:none; background-color: inherit; padding:10px;" data-product="{{ item.product.id }}" data-action="add" class="update-cart">
                             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11">
@@ -69,7 +69,7 @@
                         </button>
                       </div>
                     </td>
-                    <td class="border-0 align-middle"><strong>${{ item.get_total }}</strong></td>
+                    <td class="border-0 align-middle text-light"><strong>${{ item.get_total }}</strong></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -79,17 +79,17 @@
           </div>
         </div>
   
-        <div class="row py-5 p-4 bg-white rounded shadow-sm">
+        <div class="row py-5 p-4 rounded shadow-sm"  style="background: #191919; border-radius: 24px">
           
           <div class="col-lg-6">
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
+            <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold text-light">Instructions for seller</div>
             <div class="p-4">
-              <p class="font-italic mb-4">If you have some information for the seller you can leave them in the box below</p>
-              <textarea name="instructions" cols="30" rows="2" class="form-control"></textarea>
+              <p class="font-italic mb-4 text-light">If you have some information for the seller you can leave them in the box below</p>
+              <textarea name="instructions" cols="30" rows="2" class="form-control bg-dark text-light"></textarea>
             </div>
           </div>
           <div class="col-lg-6" style = "margin: auto" >
-            <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+            <div class="bg-dark rounded-pill px-4 py-3 text-uppercase font-weight-bold text-light">Order summary </div>
             <div class="p-4">
               <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
               <ul class="list-unstyled mb-4">
